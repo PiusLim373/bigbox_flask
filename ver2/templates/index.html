@@ -1,0 +1,82 @@
+<html lang="en">
+
+<head>
+    <title>BigBox Debug Page</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/all.css">
+    <link rel="stylesheet" href="static/css/custom.css">
+    <script src="static/scripts/popper.min.js"></script>
+    <script src="static/scripts/jquery-3.5.1.slim.min.js"></script>
+    <script src="static/scripts/bootstrap.min.js"></script>
+    <script src="static/scripts/custom.js"></script>
+    <script>
+        $(document).ready(function(){
+           GetLastMainTime();
+       });  
+   </script>
+</head>
+
+<body>
+    <br>
+    <br>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class="jumbotron vertical-center">
+                <h1 class="display-3">Bigbox</h1>
+                <p class="lead">Greetings, welcome to Bigbox! </p>
+                <p class="lead">To continue, please indicate which process to proceed</p>
+                <hr class="my-4">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card text-white bg-dark mb-3" >
+                            <div class="card-header">Maintenance</div>
+                            <div class="card-body">
+                              <p class="card-text">Unlock all service doors and all modules doors for cleaning or consumables refill.</p>
+                              <p class="card-text" id="lastmain">Last maintenance since: </p>
+                              <button type="button" class="btn btn-info btn-lg dryweybaybtn" onclick="location.href='/control_panel';">Press for Maintenance</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card text-white bg-dark mb-3" >
+                            <div class="card-header">Control Center</div>
+                            <div class="card-body">
+                              <p class="card-text">BigBox main feature. </p>
+                              <p class="card-text">Proceed to perform GES Basic Set assembly and inspection process.</p>
+                              <button type="button" class="btn btn-info btn-lg dryweybaybtn" onclick="location.href='/control_panel';">Press for Control Center</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+    </div>
+</body>
+<script type="text/javascript">
+    function GetLastMainTime(){
+        $.ajax({
+        method:'GET',
+        url:"/MaintenanceTime",
+        success:function(respond){
+            var month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+            var week = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
+            console.log(parseFloat(respond)*1000);
+            var MainTime = new Date(parseFloat(respond) * 1000);
+            console.log(MainTime);
+            // timestring = MainTime.getMonth + MainTime.getDate + MainTime.getFullYear + "(" + MainTime.getDay + ")" + MainTime.getHours + "0" + MainTime.getMinutes() + "0" + MainTime.getSeconds();
+            // timestring = MainTime.getMonth() + MainTime.getDate() + MainTime.getFullYear() + "(" + MainTime.getDay() + ")" + MainTime.getHours() + "0" + MainTime.getMinutes() + "0" + MainTime.getSeconds();
+            
+            timestring = MainTime.getDate() + " " + month[MainTime.getMonth()] + " " + MainTime.getFullYear() + " (" + week[MainTime.getDay()] + ") " + MainTime.getHours() + ':' + ("0" + MainTime.getMinutes()).substr(-2) + ':' + ("0" + MainTime.getSeconds()).substr(-2);
+            console.log(timestring);
+            $('#lastmain').text("Last maintenance since: " + timestring);
+        }
+    });
+    }
+</script>
+</html>

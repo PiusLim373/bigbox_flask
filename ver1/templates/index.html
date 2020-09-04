@@ -1,0 +1,348 @@
+<html lang="en">
+
+<head>
+    <title>BigBox Debug Page</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/custom.css">
+    <script src="static/scripts/popper.min.js"></script>
+    <script src="static/scripts/jquery-3.5.1.slim.min.js"></script>
+    <script src="static/scripts/bootstrap.min.js"></script>
+    <script src="static/scripts/custom.js"></script>
+    <script>
+        $(document).ready(function () {
+            GetStatus();
+        });
+
+    </script>
+</head>
+
+<body>
+    <br>
+    <br>
+    <br>
+    <div class="container">
+        <div class="row">
+        <div class="col-md-12">
+            <div class="jumbotron">
+                <h1 class="display-3">Wetbay</h1>
+                <hr class="my-4">
+                <h2>Tray</h2>
+                <table id="tray" class="table table-hover table-sm">
+                    <tbody>
+                        <tr>
+                            <th scope="row">Pigeon Hole #1</th>
+                            <td><a id="TrayTrue1" href="" onclick="UpdateInput(this)"
+                                    data-json='{"type":"tray", "position": 1, "value":1}'>Loaded</a></td>
+                            <td><a id="TrayFalse1" href="" onclick="UpdateInput(this)"
+                                    data-json='{"type":"tray", "position": 1, "value":0}'>Unloaded</a></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Pigeon Hole #2</th>
+                            <td><a id="TrayTrue2" href="" onclick="UpdateInput(this)"
+                                    data-json='{"type":"tray", "position": 2, "value":1}'>Loaded</a></td>
+                            <td><a id="TrayFalse2" href="" onclick="UpdateInput(this)"
+                                    data-json='{"type":"tray", "position": 2, "value":0}'>Unloaded</a></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Pigeon Hole #3</th>
+                            <td><a id="TrayTrue3" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"tray", "position": 3, "value":1}'>Loaded</a></td>
+                            <td><a id="TrayFalse3" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"tray", "position": 3, "value":0}'>Unloaded</a></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Pigeon Hole #4</th>
+                            <td><a id="TrayTrue4" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"tray", "position": 4, "value":1}'>Loaded</a></td>
+                            <td><a id="TrayFalse4" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"tray", "position": 4, "value":0}'>Unloaded</a></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Pigeon Hole #5</th>
+                            <td><a id="TrayTrue5" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"tray", "position": 5, "value":1}'>Loaded</a></td>
+                            <td><a id="TrayFalse5" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"tray", "position": 5, "value":0}'>Unloaded</a></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Pigeon Hole #6</th>
+                            <td><a id="TrayTrue6" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"tray", "position": 6, "value":1}'>Loaded</a></td>
+                            <td><a id="TrayFalse6" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"tray", "position": 6, "value":0}'>Unloaded</a></td>
+                        </tr>
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="jumbotron">
+                <h1 class="display-3">Drybay</h1>
+                <hr class="my-4">
+                <h2>Cover</h2>
+                <table class="table table-hover table-sm">
+                    <tbody>
+                        <tr>
+                            <th scope="row">Pigeon Hole #1</th>
+                            <td><a id="CoverTrue1" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"cover", "position": 1, "value":1}'>Loaded</a></td>
+                            <td><a id="CoverFalse1" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"cover", "position": 1, "value":0}'>Unloaded</a></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Pigeon Hole #2</th>
+                            <td><a id="CoverTrue2" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"cover", "position": 2, "value":1}'>Loaded</a></td>
+                            <td><a id="CoverFalse2" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"cover", "position": 2, "value":0}'>Unloaded</a></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Pigeon Hole #3</th>
+                            <td><a id="CoverTrue3" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"cover", "position": 3, "value":1}'>Loaded</a></td>
+                            <td><a id="CoverFalse3" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"cover", "position": 3, "value":0}'>Unloaded</a></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Pigeon Hole #4</th>
+                            <td><a id="CoverTrue4" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"cover", "position": 4, "value":1}'>Loaded</a></td>
+                            <td><a id="CoverFalse4" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"cover", "position": 4, "value":0}'>Unloaded</a></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Pigeon Hole #5</th>
+                            <td><a id="CoverTrue5" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"cover", "position": 5, "value":1}'>Loaded</a></td>
+                            <td><a id="CoverFalse5" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"cover", "position": 5, "value":0}'>Unloaded</a></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Pigeon Hole #6</th>
+                            <td><a id="CoverTrue6" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"cover", "position": 6, "value":1}'>Loaded</a></td>
+                            <td><a id="CoverFalse6" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"cover", "position": 6, "value":0}'>Unloaded</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <br>
+                <br>
+                <h2>Container</h2>
+                <table class="table table-hover table-sm">
+                    <tbody>
+                        <tr>
+                            <th scope="row">Pigeon Hole #1</th>
+                            <td><a id="ContainerTrue1" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"container", "position": 1, "value":1}'>Loaded</a></td>
+                            <td><a id="ContainerFalse1" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"container", "position": 1, "value":0}'>Unloaded</a></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Pigeon Hole #2</th>
+                            <td><a id="ContainerTrue2" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"container", "position": 2, "value":1}'>Loaded</a></td>
+                            <td><a id="ContainerFalse2" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"container", "position": 2, "value":0}'>Unloaded</a></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Pigeon Hole #3</th>
+                            <td><a id="ContainerTrue3" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"container", "position": 3, "value":1}'>Loaded</a></td>
+                            <td><a id="ContainerFalse3" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"container", "position": 3, "value":0}'>Unloaded</a></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Pigeon Hole #4</th>
+                            <td><a id="ContainerTrue4" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"container", "position": 4, "value":1}'>Loaded</a></td>
+                            <td><a id="ContainerFalse4" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"container", "position": 4, "value":0}'>Unloaded</a></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Pigeon Hole #5</th>
+                            <td><a id="ContainerTrue5" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"container", "position": 5, "value":1}'>Loaded</a></td>
+                            <td><a id="ContainerFalse5" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"container", "position": 5, "value":0}'>Unloaded</a></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Pigeon Hole #6</th>
+                            <td><a id="ContainerTrue6" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"container", "position": 6, "value":1}'>Loaded</a></td>
+                            <td><a id="ContainerFalse6" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"container", "position": 6, "value":0}'>Unloaded</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="jumbotron">
+                <h1 class="display-3">Ring Inspection Bay</h1>
+                <hr class="my-4">
+                <h2>Instruments on Shuttles</h2>
+                <table class="table table-hover table-sm">
+                    <tbody>
+                        <tr>
+                            <th scope="row">Shuttle #1</th>
+                            <td><a id="ShuttleTrue1" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"shuttle", "position": 1, "value":1}'>Defective</a></td>
+                            <td><a id="ShuttleFalse1" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"shuttle", "position": 1, "value":0}'>Non Defective</a></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Shuttle #2</th>
+                            <td><a id="ShuttleTrue2" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"shuttle", "position": 2, "value":1}'>Defective</a></td>
+                            <td><a id="ShuttleFalse2" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"shuttle", "position": 2, "value":0}'>Non Defective</a></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Shuttle #3</th>
+                            <td><a id="ShuttleTrue3" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"shuttle", "position": 3, "value":1}'>Defective</a></td>
+                            <td><a id="ShuttleFalse3" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"shuttle", "position": 3, "value":0}'>Non Defective</a></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Shuttle #4</th>
+                            <td><a id="ShuttleTrue4" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"shuttle", "position": 4, "value":1}'>Defective</a></td>
+                            <td><a id="ShuttleFalse4" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"shuttle", "position": 4, "value":0}'>Non Defective</a></td>
+                        </tr>
+                        <tr>
+                            <th scope="row">Shuttle #5</th>
+                            <td><a id="ShuttleTrue5" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"shuttle", "position": 5, "value":1}'>Defective</a></td>
+                            <td><a id="ShuttleFalse5" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"shuttle", "position": 5, "value":0}'>Non Defective</a></td>
+                        <tr>
+                            <th scope="row">Shuttle #6</th>
+                            <td><a id="ShuttleTrue6" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"shuttle", "position": 6, "value":1}'>Defective</a></td>
+                            <td><a id="ShuttleFalse6" href="" onclick="UpdateInput(this)"
+                                data-json='{"type":"shuttle", "position": 6, "value":0}'>Non Defective</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="jumbotron" id="NonRingInspectionBayJumbotron">
+                <h1 class="display-3">Non Ring Inspection Bay</h1>
+                <hr class="my-4">
+                <h2>Non Ring Instruments</h2>
+                <p>Toggle OFF to make instrument(s) defective</p>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="retractor1" checked="">
+                            <label class="custom-control-label" for="retractor1">Retractor #1</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="retractor2" checked="">
+                            <label class="custom-control-label" for="retractor2">Retractor #2</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="tcj1" checked="">
+                            <label class="custom-control-label" for="tcj1">Towel Clip Jones #1</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="tcj2" checked="">
+                            <label class="custom-control-label" for="tcj2">Towel Clip Jones #2</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="tcj3" checked="">
+                            <label class="custom-control-label" for="tcj3">Towel Clip Jones #3</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="tcj4" checked="">
+                            <label class="custom-control-label" for="tcj4">Towel Clip Jones #4</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="tcj5" checked="">
+                            <label class="custom-control-label" for="tcj5">Towel Clip Jones #5</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="tcj6" checked="">
+                            <label class="custom-control-label" for="tcj6">Towel Clip Jones #6</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="parker1" checked="">
+                            <label class="custom-control-label" for="parker1">Handle Bard Parker #1</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="parker2" checked="">
+                            <label class="custom-control-label" for="parker2">Handle Bard Parker #2</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="ruler" checked="">
+                            <label class="custom-control-label" for="ruler">Ruler Graduated Multipurpose</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="gillies" checked="">
+                            <label class="custom-control-label" for="gillies">Forcep Dissecting Gillies</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="mcindoe" checked="">
+                            <label class="custom-control-label" for="mcindoe">Forcep Dissecting Mcindoe</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="custom-control custom-switch">
+                            <input type="checkbox" class="custom-control-input" id="spear" checked="">
+                            <label class="custom-control-label" for="spear">Spear Redivac</label>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row"><button type="button" class="btn btn-primary" onclick="Nonringinput()">Submit</button></div>
+                
+                
+            </div>
+        </div>
+        </div>
+
+
+    </div>
+</body>
+
+</html>

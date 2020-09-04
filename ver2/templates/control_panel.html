@@ -1,0 +1,271 @@
+<html lang="en">
+
+<head>
+    <title>BigBox Debug Page</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/all.css">
+    <link rel="stylesheet" href="static/css/custom.css">
+    <script src="static/scripts/popper.min.js"></script>
+    <script src="static/scripts/jquery-3.5.1.slim.min.js"></script>
+    <script src="static/scripts/bootstrap.min.js"></script>
+    <script src="static/scripts/custom.js"></script>
+    <script>
+        $(document).ready(function(){
+           StatusTextDisplay();
+       });  
+   </script>
+</head>
+
+<body>
+    <br>
+    <br>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class=col-md-12>
+                <h1 class="display-3">Bigbox Control Centre</h1>
+            </div>
+            <div class=col-md-3>
+                <div class="card text-white bg-primary" >
+                    <div class="card-header">Overall Process</div>
+                    <div class="card-body" id="overallprocess">
+                      <p class="card-text">Consumables checking</p><center><i class="fas fa-chevron-down"></i></center>
+                      <p class="card-text">Tray, cover, container checking</p><center><i class="fas fa-chevron-down"></i></center>
+                      <p class="card-text">Magil's Input Bay checking</p><center><i class="fas fa-chevron-down"></i></center>
+                      <p class="card-text">Start Process Prompt</p><center><i class="fas fa-chevron-down"></i></center>
+                      <p class="card-text">Scissors Bracket 1 Picking</p><center><i class="fas fa-chevron-down"></i></center>
+                      <p class="card-text">Scissors Bracket 2 Picking</p><center><i class="fas fa-chevron-down"></i></center>
+                      <p class="card-text">Kidney Dish Picking</p><center><i class="fas fa-chevron-down"></i></center>
+                      <p class="card-text">Gallipot Picking</p><center><i class="fas fa-chevron-down"></i></center>
+                      <p class="card-text">Retractor Langenback (Adult) 1 Picking</p><center><i class="fas fa-chevron-down"></i></center>
+                      <p class="card-text">Retractor Langenback (Adult) 2 Picking</p><center><i class="fas fa-chevron-down"></i></center>
+                      <p class="card-text">Retractor Langenback (Baby) 1 Picking</p><center><i class="fas fa-chevron-down"></i></center>
+                      <p class="card-text">Retractor Langenback (Baby) 2 Picking</p><center><i class="fas fa-chevron-down"></i></center>
+                      <p class="card-text">Tray Paper Dispensing</p><center><i class="fas fa-chevron-down"></i></center>
+                      <p class="card-text">Transfering Tray to DryBay</p><center><i class="fas fa-chevron-down"></i></center>
+                      <p class="card-text">Indicator Dispensing</p><center><i class="fas fa-chevron-down"></i></center>
+                      <p class="card-text">Retractor Langenback (Adult) 1 Picking</p><center><i class="fas fa-chevron-down"></i></center>
+                      <p class="card-text">Retractor Langenback (Adult) 2 Picking</p><center><i class="fas fa-chevron-down"></i></center>
+                      <p class="card-text">Retractor Langenback (Baby) 1 Picking</p><center><i class="fas fa-chevron-down"></i></center>
+                      <p class="card-text">Retractor Langenback (Baby) 2 Picking</p><center><i class="fas fa-chevron-down"></i></center>
+                      <p class="card-text">Retractor Langenback Faulty Replacement</p><center><i class="fas fa-chevron-down"></i></center>
+                      <p class="card-text">...</p>
+                    </div>
+                  </div>
+            </div>
+            <div class=col-md-8>
+                <div class="col-md-12" >
+                    <div class="card text-white bg-info mb-3" id="processfeedback">
+                        <div class="card-header">Real-time current Status</div>
+                        <div class="card-body">
+                            <p class="card-text" id="previous_status"></p>
+                            <p class="card-text" id="status">Greetings, welcome to Bigbox! To continue, load in necessary items as instructed and follow the steps below. Starts by pressing the 'Check Consumables' button.</p>
+                    </div>
+                    </div>
+                </div>
+                <div class="col-md-12" >
+                    <div class="card bg-secondary mb-3" >
+                        <div class="card-header" id="checkconsumablescard"><span class="badge badge-pill badge-primary">1</span>   Check Consumables</div>
+                        <div class="card-body hide" id="checkconsumables">
+
+                            <p class="card-text">Reloads consumables as instructed, press button below to check consumables readings...</p>
+                            <p class="card-text">Below are the consumables list to be loaded and their locations:</p>
+                            <table class="table table-hover table-sm">
+                                <thead>
+                                <tr>
+                                    <th scope="col">Consumables</th>
+                                    <th scope="col">Modules</th>
+                                    <th scope="col">Location</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr class="table-active" id="RingSpareBay">
+                                    <th scope="row">Ring Spare Instruments</th>
+                                    <td>Ring Spare Bay</td>
+                                    <td>Wall D</td>
+                                </tr>
+                                <tr class="table-active" id="NonRingSpareBay">
+                                    <th scope="row">Non-Ring Spare Instruments</th>
+                                    <td>Non-Ring Spare Bay</td>
+                                    <td>Wall B</td>
+                                </tr>
+                                <tr class="table-active" id="TempBracket">
+                                    <th scope="row">Temp Bracket</th>
+                                    <td>Ring Inspection Bay</td>
+                                    <td>Wall A</td>
+                                </tr>
+                                <tr class="table-active" id="TrayPaper">
+                                    <th scope="row">50cm x 30cm Tray Paper</th>
+                                    <td>Tray Paper Bay</td>
+                                    <td>Wall B</td>
+                                </tr>
+                                <tr class="table-active" id="WrappingPaper">
+                                    <th scope="row">30cm x 30cm Wrapping Crepe Paper</th>
+                                    <td>Wrapping Bay</td>
+                                    <td>Wall D</td>
+                                </tr>
+                                <tr class="table-active" id="WrappingSealer">
+                                    <th scope="row">3M Masking Tape</th>
+                                    <td>Wrapping Bay</td>
+                                    <td>Wall D</td>
+                                </tr>
+                                <tr class="table-active" id="PrintedListWrapper">
+                                    <th scope="row">30cm x 30cm Wrapping Crepe Paper</th>
+                                    <td>Printer Bay</td>
+                                    <td>Wall A</td>
+                                </tr>
+                                <tr class="table-active" id="A4Paper">
+                                    <th scope="row">A4 Paper</th>
+                                    <td>Printer Bay</td>
+                                    <td>Wall A</td>
+                                </tr>
+                                <tr class="table-active" id="IndicatorDispenser">
+                                    <th scope="row">3M Steam Indicator</th>
+                                    <td>Indicator Dispenser</td>
+                                    <td>Wall B</td>
+                                </tr>
+                                <tr class="table-active" id="StickerTag">
+                                    <th scope="row">Sticker Tag</th>
+                                    <td>Sticker Tag Printer</td>
+                                    <td>Wall B</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                            <p class="card-text hide" id="checkconsumablesfailtext">Error while checking consumables highlighted in RED, please refill consumables and press "Check Consumables" button again</p>
+                            <button type="button" class="btn btn-primary dryweybaybtn" onclick="CheckConsumables()" id="CheckConsumablesBtn">Check Consumables</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12" >
+                    <div class="card bg-secondary mb-3" >
+                        <div class="card-header" id="checkdrywetmagilscard"><span class="badge badge-pill badge-primary">2</span>   Check Wet Bay, Dry Bay and Magil's Input Bay</div>
+                        <div class="card-body hide" id="checkwetdrymagil">
+                            <div class="row">
+                                <div class="col-md-6 ">
+                                    <center><h4>WetBay</h4></center>
+                                    <table class="table table-hover table-sm">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">Slot</th>
+                                            <th scope="col">Status</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr class="table-success" id="wb1">
+                                            <th scope="row">#1</th>
+                                            <td>OK</td>
+                                        </tr>
+                                        <tr class="table-success" id="wb2">
+                                            <th scope="row">#2</th>
+                                            <td>OK</td>
+                                        </tr>
+                                        <tr class="table-success" id=wb3>
+                                            <th scope="row">#3</th>
+                                            <td>OK</td>
+                                        </tr>
+                                        <tr class="table-success" id="wb4">
+                                            <th scope="row">#4</th>
+                                            <td>OK</td>
+                                        </tr>
+                                        <tr class="table-success" id="wb5">
+                                            <th scope="row">#5</th>
+                                            <td>OK</td>
+                                        </tr>
+                                        <tr class="table-success" id="wb6">
+                                            <th scope="row">#6</th>
+                                            <td>OK</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-md-6 ">
+                                    <center><h4>DryBay</h4></center>
+                                    <table class="table table-hover table-sm">
+                                        <thead>
+                                        <tr>
+                                            <th scope="col">Slot</th>
+                                            <th scope="col">Status</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody>
+                                        <tr class="table-success" id="db1">
+                                            <th scope="row">#1</th>
+                                            <td>OK</td>
+                                        </tr>
+                                        <tr class="table-success" id="db2">
+                                            <th scope="row">#2</th>
+                                            <td>OK</td>
+                                        </tr>
+                                        <tr class="table-success" id="db3">
+                                            <th scope="row">#3</th>
+                                            <td>OK</td>
+                                        </tr>
+                                        <tr class="table-success" id="db4">
+                                            <th scope="row">#4</th>
+                                            <td>OK</td>
+                                        </tr>
+                                        <tr class="table-success" id="db5">
+                                            <th scope="row">#5</th>
+                                            <td>OK</td>
+                                        </tr>
+                                        <tr class="table-success" id="db6">
+                                            <th scope="row">#6</th>
+                                            <td>OK</td>
+                                        </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="col-md-12">
+                                    <h5 id="magil">Magil's Suction Tube left: </h5>
+                                </div>
+                            </div>
+                            <h5 id="pigeonhole_to_process"></h5>
+                            <p class="card-text">Confirm load in or Reload Drybay / Wetbay and Refresh Readings</p>
+                            <div class="row">
+                                <div class="col-md-12"><button type="button" class="btn btn-primary dryweybaybtn" onclick="CheckDryWetMagil()" id="CheckDryWetMagilBtn">Refresh DryBay / WetBay Readings</button></div>
+                                <div class="col-md-12"><button type="button" class="btn btn-lg btn-success dryweybaybtn" onclick="StartProcess()" id="StartProcessBtn">Comfirm Load-in and Start Process</button></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="button" class="btn btn-primary" onclick="Resolve()" id="resolveBtn">Resolve</button>
+            </div>
+        </div>
+
+    </div>
+</body>
+<script type="text/javascript">
+    function StatusTextDisplay(){
+        var source_info_status = new EventSource("/statusSSE");
+        // console.log("SSE connected")
+        source_info_status.onmessage = function(event){
+            
+            var data = JSON.parse(event.data);
+            console.log(data.web_status_text);
+            $('#status').text(data.web_status_text);
+            if (data.web_previous_status_text != ""){
+                $('#previous_status').removeClass("hide");
+                $('#previous_status').text(data.web_previous_status_text);
+            }
+            else{
+                $('#previous_status').addClass("hide");
+            }
+            stage = parseInt(data.web_stage);
+            console.log(stage);
+            ChangeStage();
+            if(parseInt(data.web_resolve_btn) == 1){
+                $('#resolveBtn').removeClass("hide");
+                $('#processfeedback').removeClass("bg-success");
+                $('#processfeedback').addClass("bg-danger");
+            }
+            else{
+                $('#resolveBtn').addClass("hide");
+            }
+        }
+    }
+</script>
+</html>
