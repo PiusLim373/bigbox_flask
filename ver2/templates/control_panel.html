@@ -61,7 +61,7 @@
                     <div class="card text-white bg-info mb-3" id="processfeedback">
                         <div class="card-header">Real-time current Status</div>
                         <div class="card-body">
-                            <p class="card-text" id="previous_status"></p>
+                            <!-- <p class="card-text" id="previous_status"></p> -->
                             <p class="card-text" id="status">Greetings, welcome to Bigbox! To continue, load in necessary items as instructed and follow the steps below. Starts by pressing the 'Check Consumables' button.</p>
                     </div>
                     </div>
@@ -231,8 +231,7 @@
                         </div>
                     </div>
                 </div>
-                
-                <button type="button" class="btn btn-primary" onclick="Resolve()" id="resolveBtn">Resolve</button>
+
             </div>
         </div>
 
@@ -245,26 +244,21 @@
         source_info_status.onmessage = function(event){
             
             var data = JSON.parse(event.data);
+            // if( parseInt(data.web_stage) != 1){
+                
+            // }
             console.log(data.web_status_text);
-            $('#status').text(data.web_status_text);
-            if (data.web_previous_status_text != ""){
-                $('#previous_status').removeClass("hide");
-                $('#previous_status').text(data.web_previous_status_text);
-            }
-            else{
-                $('#previous_status').addClass("hide");
-            }
+                $('#status').text(data.web_status_text);
+            // if (data.web_previous_status_text != ""){
+            //     $('#previous_status').removeClass("hide");
+            //     $('#previous_status').text(data.web_previous_status_text);
+            // }
+            // else{
+            //     $('#previous_status').addClass("hide");
+            // }
             stage = parseInt(data.web_stage);
             console.log(stage);
             ChangeStage();
-            if(parseInt(data.web_resolve_btn) == 1){
-                $('#resolveBtn').removeClass("hide");
-                $('#processfeedback').removeClass("bg-success");
-                $('#processfeedback').addClass("bg-danger");
-            }
-            else{
-                $('#resolveBtn').addClass("hide");
-            }
         }
     }
 </script>

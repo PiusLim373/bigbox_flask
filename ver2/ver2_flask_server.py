@@ -4,6 +4,8 @@ import requests
 from time import sleep
 import subprocess
 import datetime
+import rospy
+from std_msgs.msg import String
 app = Flask(__name__)
 
 LastMaintenanceTime = datetime.datetime.now()
@@ -18,7 +20,6 @@ ConsumablesFlask = "http://127.0.0.1:5005/get_status"
 
 web_status_text = "Greetings, welcome to Bigbox! To continue, load in necessary items as instructed and follow the steps below. Starts by pressing the 'Check Consumables' button."
 web_stage = 0
-web_resolve_btn = 0
 pigeonhole_to_process = []
 consumables_error_list = []
 consumables_SMACHRun = False
@@ -35,16 +36,14 @@ def statusSSE():
     def gen1():
         status_text_temp = ""
         web_stage_temp = 1
-        web_resolve_btn_temp = 0
         while True:
-            if status_text_temp != web_status_text or web_stage_temp != web_stage or web_resolve_btn_temp != web_resolve_btn:
+            if status_text_temp != web_status_text or web_stage_temp != web_stage:
                 print("SSE triggerred")
                 previous_status_text = status_text_temp
                 status_text_temp = web_status_text
                 web_stage_temp = web_stage
-                web_resolve_btn_temp = web_resolve_btn
                 # print('data:{"web_status_text":"' + str(web_status_text) + '", "web_stage": "' + str(web_stage) + '"}\n\n')
-                yield 'data:{"web_status_text":"' + str(web_status_text) + '", "web_previous_status_text" : "' + previous_status_text +'" ,"web_stage": ' + str(web_stage) + ', "web_resolve_btn": '+ str(web_resolve_btn) + '}\n\n'
+                yield 'data:{"web_status_text":"' + str(web_status_text) + '", "web_previous_status_text" : "' + previous_status_text +'" ,"web_stage": ' + str(web_stage) + '}\n\n'
     return Response(gen1(), mimetype='text/event-stream')
 
 @app.route('/CheckConsumables', methods = ['GET', 'POST'])
@@ -73,7 +72,7 @@ def CheckConsumables():
             for x in consumables_error_list:
                 s += x + ', '
             print("Consumables checking failed, error in following modules: " + s)
-            updateUI("Consumables checking failed, error in following modules: " + str(s))
+            updateUI("Consumables checking failed, please check the info below")
             sleep(1)
             return 'False' # return false to smach
         else:
@@ -87,9 +86,7 @@ def CheckConsumables():
             success = 0
         if not consumables_SMACHRun:
             success = 2
-        print("SMACHRun status: " + str(consumables_SMACHRun))
         response = {'check_success': success, 'ConsumablesDict': ConsumablesDict}
-        print(response)
         return jsonify(response)
         # ConsumablesDict = {'RingSpareBay' : RingSpareBayCon, 'NonRingSpareBay' : NonRingSpareBayCon, 'TempBracket' : TempBracketCon, 'TrayPaper' : TrayPaperCon, 'WrappingPaper' : WrappingPaperCon, 'WrappingSealer' : WrappingSealerCon, 'PrintedListWrapper' : PrintedListWrapperCon, 'A4Paper' : A4PaperCon, 'IndicatorDispenser' : IndicatorDispenserCon, 'StickerTag' : StickerTagCon}
     
@@ -111,6 +108,7 @@ def CheckTrayCoverContainer():
     except:
         magil = 0
     if request.method == 'GET': #from smach
+        print("request get /CheckWetDryMagil run")
         updateUI("Checking Wetbay and Drybay for tray, cover and container....") #update GUI current status
         pigeonhole_to_process = []
         drywetmagil_error = False
@@ -121,22 +119,26 @@ def CheckTrayCoverContainer():
             elif tray[i] and (not cc[i]):
                 print("drybay slot "+str(i)+" not loaded" )
                 drywetmagil_error = True
+                updateUI("Loading error, please check below")
                 error = {'task':'error_tray', 'input':i}
                 requests.post(DryBayFlask, json = error)
             elif (not tray[i]) and cc[i]:
                 print("wetbay slot "+str(i)+" not loaded" )
                 drywetmagil_error = True
+                updateUI("Loading error, please check below")
                 error = {'task':'error_tray', 'input':i}
                 requests.post(WetBayFlask, json = error)
         if(magil < len(pigeonhole_to_process)): # number of magil is less than pigeonhole to process
             drywetmagil_error = True
+            updateUI("Number of Magil's Tube available is fewer than tray to be processed, please reload.")
             print("magil error")
         if len(pigeonhole_to_process) == 0 or drywetmagil_error:
-            updateUI("Neither tray nor cover container is loaded, please load and try again")
+            if len(pigeonhole_to_process) == 0:
+                updateUI("No slot is loaded, please load in Tray, Cover and Container to continue")
             sleep(1)
             return 'False' # return false to smach
         else:
-            updateUI("Checking successful, Pigeon Hole to process: " + str(pigeonhole_to_process))
+            updateUI("Checking successful, check below for pigeon hole to be processed. Press 'Start Process' to proceed.")
             sleep(1)
             print(pigeonhole_to_process)
             return str(pigeonhole_to_process) # return pigeonhole_to_process list count to smach
@@ -156,31 +158,23 @@ def control_panel():
 def CheckConsumablesLoaded():
     # trigger smach here
     print("process started")
-    subprocess.call('python ~/all_ws/goldfinger_ws/bigbox_smach/ver2/publisher.py', shell = True)
+    subprocess.call('python ~/all_ws/goldfinger_ws/src/bigbox_flask/ver2/publisher.py', shell = True)
     return '1'
 
 @app.route('/CheckDryWetMagil', methods = ['GET'])
 def CheckWetDryBay():
     # trigger smach here
     print("process started")
-    subprocess.call('python ~/all_ws/goldfinger_ws/bigbox_smach/ver2/publisher.py', shell = True)
+    subprocess.call('python ~/all_ws/goldfinger_ws/src/bigbox_flask/ver2/publisher.py', shell = True)
     return '1'
 
 @app.route('/StartProcess', methods = ['GET'])
 def StartProcess():
     # trigger smach here
     print("process started")
-    subprocess.call('python ~/all_ws/goldfinger_ws/bigbox_smach/ver2/publisher.py', shell = True)
+    subprocess.call('python ~/all_ws/goldfinger_ws/src/bigbox_flask/ver2/publisher.py', shell = True)
     return '1'
 
-@app.route('/ErrorResolved', methods = ['POST'])
-def ErrorResolved():
-    global web_resolve_btn
-    # web_resolve_btn = 0
-    subprocess.call('python ~/all_ws/goldfinger_ws/bigbox_smach/ver2/publisher.py', shell = True)
-    # data = request.get_json()
-    # if data['stage'] == "checkloading":
-    return 'True'
         
 
 @app.route('/SMACHPing', methods = ['POST']) #use to transfer message from smach to webUI

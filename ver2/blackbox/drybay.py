@@ -3,7 +3,7 @@ from flask import Flask, request
 from time import sleep
 app = Flask(__name__)
 
-container_presense = [1,1,0,0,0,1] # this should be get from sensor
+container_presense = [1,1,1,0,0,1] # this should be get from sensor
 cover_presense = [1,1,1,0,0,1] # this should be get from sensor
 error_slot = []
 

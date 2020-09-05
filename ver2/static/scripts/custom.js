@@ -34,6 +34,7 @@
 // }
 var stage_arr = ['checkconsumables', 'checkwetdrymagil','null', 'startprocess', 'mainprocess']
 var stage = 0
+var CheckDryWetMagil_firstpress = 1
 
 function HideOthersExcept(){
     for(var i = 0; i < stage_arr.length; i++){
@@ -53,6 +54,10 @@ function UpdateCheckConsumablesDiv(){
         },
         success:function(respond){
             if(respond['check_success'] == 1){
+                $('#processfeedback').removeClass("bg-info");
+                $('#processfeedback').removeClass("bg-danger");
+                $('#processfeedback').addClass("bg-success");
+                $('#checkconsumablescard').removeClass("card-header-danger");
                 $('#checkconsumablescard').addClass("card-header-success");
                 $('#checkconsumablesfailtext').addClass("hide");
                 for (var key in respond['ConsumablesDict']){
@@ -61,6 +66,10 @@ function UpdateCheckConsumablesDiv(){
                 }
             }
             else if(respond['check_success'] == 0){
+                $('#processfeedback').removeClass("bg-info");
+                $('#processfeedback').removeClass("bg-success");
+                $('#processfeedback').addClass("bg-danger");
+                $('#checkconsumablescard').removeClass("card-header-success");
                 $('#checkconsumablescard').addClass("card-header-danger");
                 $('#checkconsumablesfailtext').removeClass("hide");
                 for (var key in respond['ConsumablesDict']){
@@ -76,6 +85,13 @@ function UpdateCheckConsumablesDiv(){
                     
                 }
             }
+            else{
+                for (var key in respond['ConsumablesDict']){
+                    $('#'+key).removeClass("table-danger");
+                    $('#'+key).removeClass("table-success");
+                    $('#'+key).addClass("table-active");
+                }
+            }
         }
     });
 }
@@ -88,17 +104,24 @@ function UpdateCheckWetDryMagilDiv(){
             'from':'webui'
         },
         success:function(respond){
-            console.log(respond);
             var tray = respond['tray'];
             var cover = respond['cover'];
             var container = respond['container'];
             var cc = respond['cc'];
             if (respond['error']){
+                $('#processfeedback').removeClass("bg-info");
+                $('#processfeedback').removeClass("bg-success");
+                $('#processfeedback').addClass("bg-danger");
+                $('#checkdrywetmagilscard').removeClass('card-header-success');
                 $('#checkdrywetmagilscard').addClass('card-header-danger');
                 $('#StartProcessBtn').addClass("disabled");
                 $('#StartProcessBtn').removeAttr("onclick");
             }
             else{
+                $('#processfeedback').removeClass("bg-info");
+                $('#processfeedback').removeClass("bg-danger");
+                $('#processfeedback').addClass("bg-success");
+                $('#checkdrywetmagilscard').removeClass('card-header-danger');
                 $('#checkdrywetmagilscard').addClass('card-header-success');
                 $('#StartProcessBtn').removeClass("disabled");
                 $('#StartProcessBtn').attr("onclick",'StartProcess()');
@@ -157,6 +180,14 @@ function UpdateCheckWetDryMagilDiv(){
                     $('#db'+(i+1)).removeClass("table-success");
                     $('#db'+(i+1)).addClass("table-danger");
                 }
+                else if (check_arr  == JSON.stringify([1,1,1])){
+                    $('#db'+(i+1)+ ' td').text("OK");
+                    $('#wb'+(i+1)+ ' td').text("OK");
+                    $('#wb'+(i+1)).removeClass("table-danger");
+                    $('#wb'+(i+1)).addClass("table-success");
+                    $('#db'+(i+1)).removeClass("table-danger");
+                    $('#db'+(i+1)).addClass("table-success");
+                }
             }
             if (respond['magil'] < respond['pigeonhole_to_process'].length){
                 $('#magil').addClass("red-text");
@@ -200,11 +231,12 @@ function ChangeStage(){
 }
 
 function CheckConsumables(){
+    $('#status').text("Initializing...Please wait patiently");
     $.ajax({
         method:'GET',
         url:"/CheckConsumablesLoaded",
         success:function(respond){
-            $('#status').text("Initializing...Please wait patiently")
+            
         }
     });
     for(var i=0; i<6;i++){
@@ -224,13 +256,18 @@ function CheckConsumables(){
 
 function CheckDryWetMagil(){
     // $('#CheckDryWetMagilBtn').hide();
+    $('#status').text("Initializing...Please wait patiently");
     $.ajax({
         method:'GET',
         url:"/CheckDryWetMagil",
         success:function(respond){
-            $('#status').text("Initializing...Please wait patiently")
-        }
+            if (!CheckDryWetMagil_firstpress){
+                console.log("reload");
+                UpdateCheckWetDryMagilDiv();
+            }
+        }   
     });
+    CheckDryWetMagil_firstpress = 0;
 }
 
 function StartProcess(){
@@ -240,18 +277,6 @@ function StartProcess(){
         url:"/StartProcess",
         success:function(respond){
             $('#status').text("Initializing...Please wait patiently")
-        }
-    });
-}
-function Resolve(){
-    $.ajax({
-        method:'POST',
-        url:"/ErrorResolved",
-        data:{
-            'stage':stage_arr[stage]
-        },
-        success:function(respond){
-            $('#status').text("Verfifying resolved problems...");
         }
     });
 }
