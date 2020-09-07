@@ -56,3 +56,13 @@ a:hover{
     position: absolute;
     width:95%;
 }
+.statusbtn{
+    width:100%;
+}
+.align-right{
+    position: absolute;
+    top:15px;
+    right: 5px;
+    color: #4BBF73;
+
+}

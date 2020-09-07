@@ -158,21 +158,21 @@ def control_panel():
 def CheckConsumablesLoaded():
     # trigger smach here
     print("process started")
-    subprocess.call('python ~/all_ws/goldfinger_ws/src/bigbox_flask/ver2/publisher.py', shell = True)
+    subprocess.call('python ~/all_ws/goldfinger_ws/src/bigbox_flask/ver2/ros_msg_publisher/ErrorResolve_or_NextStage_publisher.py', shell = True)
     return '1'
 
 @app.route('/CheckDryWetMagil', methods = ['GET'])
 def CheckWetDryBay():
     # trigger smach here
     print("process started")
-    subprocess.call('python ~/all_ws/goldfinger_ws/src/bigbox_flask/ver2/publisher.py', shell = True)
+    subprocess.call('python ~/all_ws/goldfinger_ws/src/bigbox_flask/ver2/ros_msg_publisher/Recheck_publisher.py', shell = True)
     return '1'
 
 @app.route('/StartProcess', methods = ['GET'])
 def StartProcess():
     # trigger smach here
     print("process started")
-    subprocess.call('python ~/all_ws/goldfinger_ws/src/bigbox_flask/ver2/publisher.py', shell = True)
+    subprocess.call('python ~/all_ws/goldfinger_ws/src/bigbox_flask/ver2/ros_msg_publisher/ErrorResolve_or_NextStage_publisher.py', shell = True)
     return '1'
 
         

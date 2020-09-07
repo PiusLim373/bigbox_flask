@@ -32,7 +32,7 @@
 // 		}
 // 	});
 // }
-var stage_arr = ['checkconsumables', 'checkwetdrymagil','null', 'startprocess', 'mainprocess']
+var stage_arr = ['checkconsumables', 'checkwetdrymagil','sbtransfer', 'kdtransfer', 'gptransfer', 'rttransfer', 'tptransfer', 'traytransfer', 'inditransfer', 'rtretrieval']
 var stage = 0
 var CheckDryWetMagil_firstpress = 1
 
@@ -43,6 +43,10 @@ function HideOthersExcept(){
             $('#' + id).addClass("hide");
         }
     }
+}
+
+function CardHeaderSuccess(div_id){
+    $('#' + div_id).append('<i class="fas fa-check-circle  align-right"></i>');
 }
 
 function UpdateCheckConsumablesDiv(){
@@ -57,8 +61,9 @@ function UpdateCheckConsumablesDiv(){
                 $('#processfeedback').removeClass("bg-info");
                 $('#processfeedback').removeClass("bg-danger");
                 $('#processfeedback').addClass("bg-success");
+                CardHeaderSuccess("checkconsumablescard");
                 $('#checkconsumablescard').removeClass("card-header-danger");
-                $('#checkconsumablescard').addClass("card-header-success");
+                // $('#checkconsumablescard').addClass("card-header-success");
                 $('#checkconsumablesfailtext').addClass("hide");
                 for (var key in respond['ConsumablesDict']){
                     $('#'+key).removeClass("table-active");
@@ -121,8 +126,9 @@ function UpdateCheckWetDryMagilDiv(){
                 $('#processfeedback').removeClass("bg-info");
                 $('#processfeedback').removeClass("bg-danger");
                 $('#processfeedback').addClass("bg-success");
+                CardHeaderSuccess("checkdrywetmagilscard");
                 $('#checkdrywetmagilscard').removeClass('card-header-danger');
-                $('#checkdrywetmagilscard').addClass('card-header-success');
+                // $('#checkdrywetmagilscard').addClass('card-header-success');
                 $('#StartProcessBtn').removeClass("disabled");
                 $('#StartProcessBtn').attr("onclick",'StartProcess()');
             }
@@ -131,8 +137,10 @@ function UpdateCheckWetDryMagilDiv(){
                 if (check_arr == JSON.stringify([0,0,0])){
                     $('#wb'+(i+1)+ ' td').text("Not Loaded");
                     $('#db'+(i+1)+ ' td').text("Not loaded");
+                    $('#wb'+(i+1)).removeClass("table-danger");
                     $('#wb'+(i+1)).removeClass("table-success");
                     $('#wb'+(i+1)).addClass("table-warning");
+                    $('#db'+(i+1)).removeClass("table-danger");
                     $('#db'+(i+1)).removeClass("table-success");
                     $('#db'+(i+1)).addClass("table-warning");
                 }
@@ -140,22 +148,28 @@ function UpdateCheckWetDryMagilDiv(){
                     $('#wb'+(i+1)+ ' td').text("Not Loaded");
                     $('#db'+(i+1)+ ' td').text("Container not loaded");
                     $('#wb'+(i+1)).removeClass("table-success");
+                    $('#wb'+(i+1)).removeClass("table-warning");
                     $('#wb'+(i+1)).addClass("table-danger");
                     $('#db'+(i+1)).removeClass("table-success");
+                    $('#db'+(i+1)).removeClass("table-warning");
                     $('#db'+(i+1)).addClass("table-danger");
                 }
                 else if (check_arr  == JSON.stringify([0,1,0])){
                     $('#wb'+(i+1)+ ' td').text("Not Loaded");
                     $('#db'+(i+1)+ ' td').text("Cover not loaded");
                     $('#wb'+(i+1)).removeClass("table-success");
+                    $('#wb'+(i+1)).removeClass("table-warning");
                     $('#wb'+(i+1)).addClass("table-danger");
                     $('#db'+(i+1)).removeClass("table-success");
+                    $('#db'+(i+1)).removeClass("table-warning");
                     $('#db'+(i+1)).addClass("table-danger");
                 }
                 else if (check_arr == JSON.stringify([0,1,1])){
                     $('#wb'+(i+1)+ ' td').text("Not Loaded");
                     $('#wb'+(i+1)).removeClass("table-success");
+                    $('#wb'+(i+1)).removeClass("table-warning");
                     $('#wb'+(i+1)).addClass("table-danger");
+                    $('#db'+(i+1)).removeClass("table-warning");
                     $('#db'+(i+1)).removeClass("table-success");
                     $('#db'+(i+1)).addClass("table-danger");
                 }
@@ -169,23 +183,29 @@ function UpdateCheckWetDryMagilDiv(){
                 else if (check_arr  == JSON.stringify([1,0,1])){
                     $('#db'+(i+1)+ ' td').text("Container not loaded");
                     $('#wb'+(i+1)).removeClass("table-success");
+                    $('#wb'+(i+1)).removeClass("table-warning");
                     $('#wb'+(i+1)).addClass("table-danger");
                     $('#db'+(i+1)).removeClass("table-success");
+                    $('#db'+(i+1)).removeClass("table-warning");
                     $('#db'+(i+1)).addClass("table-danger");
                 }
                 else if (check_arr  == JSON.stringify([1,1,0])){
                     $('#db'+(i+1)+ ' td').text("Cover not loaded");
                     $('#wb'+(i+1)).removeClass("table-success");
+                    $('#wb'+(i+1)).removeClass("table-warning");
                     $('#wb'+(i+1)).addClass("table-danger");
                     $('#db'+(i+1)).removeClass("table-success");
+                    $('#db'+(i+1)).removeClass("table-warning");
                     $('#db'+(i+1)).addClass("table-danger");
                 }
                 else if (check_arr  == JSON.stringify([1,1,1])){
                     $('#db'+(i+1)+ ' td').text("OK");
                     $('#wb'+(i+1)+ ' td').text("OK");
+                    $('#wb'+(i+1)).removeClass("table-warning");
                     $('#wb'+(i+1)).removeClass("table-danger");
                     $('#wb'+(i+1)).addClass("table-success");
                     $('#db'+(i+1)).removeClass("table-danger");
+                    $('#db'+(i+1)).removeClass("table-warning");
                     $('#db'+(i+1)).addClass("table-success");
                 }
             }
