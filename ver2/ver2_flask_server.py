@@ -21,6 +21,7 @@ ConsumablesFlask = "http://127.0.0.1:5005/get_status"
 web_status_text = "Greetings, welcome to Bigbox! To continue, load in necessary items as instructed and follow the steps below. Starts by pressing the 'Check Consumables' button."
 web_stage = 0
 pigeonhole_to_process = []
+pigeonhole_processing = -1
 consumables_error_list = []
 consumables_SMACHRun = False
 drywetmagil_error = False
@@ -36,14 +37,17 @@ def statusSSE():
     def gen1():
         status_text_temp = ""
         web_stage_temp = 1
+        pigeonhole_processing_temp = 0
         while True:
-            if status_text_temp != web_status_text or web_stage_temp != web_stage:
+            if status_text_temp != web_status_text or web_stage_temp != web_stage or pigeonhole_processing_temp != pigeonhole_processing:
                 print("SSE triggerred")
+                print(pigeonhole_processing)
                 previous_status_text = status_text_temp
                 status_text_temp = web_status_text
                 web_stage_temp = web_stage
+                pigeonhole_processing_temp = pigeonhole_processing
                 # print('data:{"web_status_text":"' + str(web_status_text) + '", "web_stage": "' + str(web_stage) + '"}\n\n')
-                yield 'data:{"web_status_text":"' + str(web_status_text) + '", "web_previous_status_text" : "' + previous_status_text +'" ,"web_stage": ' + str(web_stage) + '}\n\n'
+                yield 'data:{"web_status_text":"' + str(web_status_text) + '", "web_previous_status_text" : "' + previous_status_text +'" ,"web_stage": ' + str(web_stage) + ', "pigeonhole_processing": ' + str(pigeonhole_processing) +'}\n\n'
     return Response(gen1(), mimetype='text/event-stream')
 
 @app.route('/CheckConsumables', methods = ['GET', 'POST'])
@@ -179,14 +183,16 @@ def StartProcess():
 
 @app.route('/SMACHPing', methods = ['POST']) #use to transfer message from smach to webUI
 def SMACHPing():
-    global web_stage, web_resolve_btn
+    global web_stage, pigeonhole_processing
     data = request.get_json()
     if data['task'] == "next_stage":
         web_stage += 1
-    if data['task'] == "spawn_resolve":
-        web_resolve_btn = 1
+    if data['task'] == "updateUI":
+        updateUI(data['input'])
     if data['task'] == "chg_web_stage":
         web_stage = data['input']
+    if data['task'] == "pigeonhole_processing":
+        pigeonhole_processing = data['input']
     return '1'
 
 ###################### For Index Page

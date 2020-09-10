@@ -233,7 +233,7 @@
                 </div>
                 <div class="col-md-12">
                     <div class="card bg-secondary mb-3 text-white bg-info" >
-                        <div class="card-header " >Currently processing: Pigeonhole #1</div>
+                        <div class="card-header " id="pigeonhole_processing">Currently processing: Pigeonhole #1</div>
                         <div class="card-body " id="checkwetdrymagil"> 
                             <p class="card-text">You can check the status of the Inspection Bays by pressing buttons below:</p>
                             <div class="row">
@@ -349,24 +349,18 @@
 <script type="text/javascript">
     function StatusTextDisplay(){
         var source_info_status = new EventSource("/statusSSE");
-        // console.log("SSE connected")
         source_info_status.onmessage = function(event){
             
             var data = JSON.parse(event.data);
-            // if( parseInt(data.web_stage) != 1){
-                
-            // }
-            console.log(data.web_status_text);
-                $('#status').text(data.web_status_text);
-            // if (data.web_previous_status_text != ""){
-            //     $('#previous_status').removeClass("hide");
-            //     $('#previous_status').text(data.web_previous_status_text);
-            // }
-            // else{
-            //     $('#previous_status').addClass("hide");
-            // }
+            console.log(data);
+            $('#status').text(data.web_status_text);
             stage = parseInt(data.web_stage);
-            console.log(stage);
+            if (data.pigeonhole_processing == -1){
+                $('#pigeonhole_processing').text("Checking in progress...")
+            }
+            else{
+                $('#pigeonhole_processing').text("CURRENTLY PROCESSING: PIGEONHOLE #" + (data.pigeonhole_processing +1) )
+            }
             ChangeStage();
         }
     }
