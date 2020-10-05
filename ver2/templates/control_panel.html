@@ -1,7 +1,7 @@
 <html lang="en">
 
 <head>
-    <title>BigBox Debug Page</title>
+    <title>BigBox Control Panel</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
@@ -14,8 +14,10 @@
     <script src="static/scripts/custom.js"></script>
     <script>
         $(document).ready(function(){
-           StatusTextDisplay();
+            $("#spawn_modal").load("/spawn_modal");
+            StatusTextDisplay();
        });  
+
    </script>
 </head>
 
@@ -25,9 +27,16 @@
     <br>
     <div class="container">
         <div class="row">
-            <div class=col-md-12>
+            <div class=col-md-12 >
                 <h1 class="display-3">Bigbox Control Centre</h1>
+                <div style="width: 100%;">
+                    <p class="lead" style="display:inline-block;">Greetings! you are now logged in as: <font color="red">{{g.user.username}}</font> </p>
+                    <button type="button" class="btn btn-primary btn-sm logout-btn" onclick="Logout()">Logout</button>
+                </div>
+                <hr class="my-4">
             </div>
+        </div>
+        <div class="row">
             <div class=col-md-3>
                 <div class="card text-white bg-primary" >
                     <div class="card-header">Overall Process</div>
@@ -56,13 +65,18 @@
                     </div>
                   </div>
             </div>
-            <div class=col-md-8>
+            <div class=col-md-9>
                 <div class="col-md-12" >
                     <div class="card text-white bg-info mb-3" id="processfeedback">
                         <div class="card-header">Real-time current Status</div>
                         <div class="card-body">
                             <!-- <p class="card-text" id="previous_status"></p> -->
                             <p class="card-text" id="status">Greetings, welcome to Bigbox! To continue, load in necessary items as instructed and follow the steps below. Starts by pressing the 'Check Consumables' button.</p>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <button type="button" class="btn btn-secondary statusbtn hide" id="StartNewProcess" onclick="StartNewProcess()">Start new process</button>
+                                </div>
+                            </div>
                     </div>
                     </div>
                 </div>
@@ -79,18 +93,21 @@
                                     <th scope="col">Consumables</th>
                                     <th scope="col">Modules</th>
                                     <th scope="col">Location</th>
+                                    <th scope="col">Refill Consumables</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr class="table-active" id="RingSpareBay">
                                     <th scope="row">Ring Spare Instruments</th>
                                     <td>Ring Spare Bay</td>
-                                    <td>Wall D</td>
+                                    <td>Wall D </td>
+                                    <td><center><a class="refillbtn" data-toggle="modal" data-target="#RingSpareBayModal">Press to Refill</a></center></td>
                                 </tr>
                                 <tr class="table-active" id="NonRingSpareBay">
                                     <th scope="row">Non-Ring Spare Instruments</th>
                                     <td>Non-Ring Spare Bay</td>
                                     <td>Wall B</td>
+                                    <td><center><a class="refillbtn">Press to Refill</a></center></td>
                                 </tr>
                                 <tr class="table-active" id="TempBracket">
                                     <th scope="row">Temp Bracket</th>
@@ -345,6 +362,9 @@
         </div>
 
     </div>
+    <!--modal-->
+    <div id="spawn_modal"></div>
+    
 </body>
 <script type="text/javascript">
     function StatusTextDisplay(){
@@ -357,6 +377,10 @@
             stage = parseInt(data.web_stage);
             if (data.pigeonhole_processing == -1){
                 $('#pigeonhole_processing').text("Checking in progress...")
+            }
+            else if(data.pigeonhole_processing == -2){
+                $('#pigeonhole_processing').text("All pigeonhole has been processed");
+                $('#StartNewProcess').removeClass("hide");
             }
             else{
                 $('#pigeonhole_processing').text("CURRENTLY PROCESSING: PIGEONHOLE #" + (data.pigeonhole_processing +1) )

@@ -66,3 +66,15 @@ a:hover{
     color: #4BBF73;
 
 }
+.logout-btn{
+    float:right;
+    margin-right: 15px;
+}
+
+.refillbtn{
+    background-color: white;
+    border-style: solid;
+    border-width: 1px;
+    padding-left: 10px;
+    padding-right: 10px;
+}

@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-from flask import Flask, request, render_template, Response, json, jsonify
+from flask import Flask, request, render_template, Response, json, jsonify, session, redirect, url_for, g
 import requests
 from time import sleep
 import subprocess
@@ -7,6 +7,7 @@ import datetime
 import rospy
 from std_msgs.msg import String
 app = Flask(__name__)
+app.secret_key = "dummysecretkey"
 
 LastMaintenanceTime = datetime.datetime.now()
 
@@ -154,6 +155,8 @@ def CheckTrayCoverContainer():
 
 @app.route('/control_panel', methods = ['GET'])
 def control_panel():
+    if not g.user:
+        return redirect(url_for('login'))
     return render_template('control_panel.html')
 
 
@@ -195,10 +198,18 @@ def SMACHPing():
         pigeonhole_processing = data['input']
     return '1'
 
-###################### For Index Page
-@app.route('/', methods = ['GET'])
+###################### For Page Routing
+
+
+@app.route('/index', methods = ['GET'])
 def index():
+    if (not g.user) or (g.user.username != "admin"):
+        return redirect(url_for('login'))
     return render_template('index.html')
+
+@app.route('/spawn_modal', methods = ['GET'])
+def spawn_modal():
+    return render_template('modal.html')
 
 @app.route('/MaintenanceTime', methods = ['GET', 'POST'])
 def MaintenanceTime():
@@ -206,6 +217,59 @@ def MaintenanceTime():
     if request.method == 'GET':
         timestamp = (LastMaintenanceTime - datetime.datetime(1970, 1, 1)).total_seconds()
         return str(timestamp)
+
+###################### For User logging
+
+class User:
+    def __init__(self, id, username, password):
+        self.id = id
+        self.username = username
+        self.password = password
+
+users = []
+users.append(User(id = 1, username = "admin", password = "bigboxadmin"))
+users.append(User(id = 2, username = "operator", password = "operator"))
+
+@app.before_request
+def before_request():
+    g.user = None
+    if 'user_id' in session:
+        user = [x for x in users if x.id == session['user_id']][0]
+        g.user = user
+        
+
+@app.route('/', methods = ['GET', 'POST'])
+def login():
+    if request.method == 'POST':
+        session.pop('user_id', None)
+        username = request.form['username']
+        password = request.form['password']
+        try:
+            user = [x for x in users if x.username == username][0]
+            if user and user.password == password:
+                session['user_id'] = user.id
+                if username == "admin":
+                    return redirect(url_for('index')) 
+                elif username == "operator":
+                    return redirect(url_for('control_panel'))
+                else:
+                    print(error)
+                    return redirect(url_for('login'))
+        except:
+            return redirect(url_for('login')) 
+        return redirect(url_for('login'))
+    else:    
+        return render_template('login.html')
+
+@app.route('/logout', methods = ['GET'])
+def logout():
+    try:
+        session.pop('user_id', None)
+        g.user = None
+        print("logged out")
+        return redirect(url_for('login'))
+    except:
+        pass
 
 if __name__ == "__main__":
     app.run(debug=True, port=5001)

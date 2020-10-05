@@ -300,3 +300,27 @@ function StartProcess(){
         }
     });
 }
+
+function Logout(){
+    $.ajax({
+        method:'GET',
+        url:"/logout",
+        success:function(respond){
+            location.reload()
+        }
+    });
+}
+
+function StartNewProcess(){
+    $.ajax({
+        method:'GET',
+        url:"/startnewprocess",
+        success:function(respond){
+            $('#StartNewProcess').addClass("hide");
+        }
+    });
+}
+
+function Refill(){
+    console.log($('#ForcepArteryAdsonRefill').val())
+}
