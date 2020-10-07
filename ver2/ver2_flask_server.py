@@ -17,7 +17,8 @@ DryBayFlask = "http://127.0.0.1:5003/get_status"
 MagilsBayFlask = "http://127.0.0.1:5004/get_status"
 ConsumablesFlask = "http://127.0.0.1:5005/get_status"
 
-
+RingSpareBayFlask = "http://127.0.0.1:5006/get_status"
+NonRingSpareBayFlask = "http://127.0.0.1:5007/get_status"
 
 web_status_text = "Greetings, welcome to Bigbox! To continue, load in necessary items as instructed and follow the steps below. Starts by pressing the 'Check Consumables' button."
 web_stage = 0
@@ -152,6 +153,29 @@ def CheckTrayCoverContainer():
         response = {'error': drywetmagil_error, 'tray':tray, 'cover':cover, 'container':container, 'cc':cc, 'pigeonhole_to_process': pigeonhole_to_process, 'magil':magil} 
         return jsonify(response)
 
+@app.route('/RefillConsumables', methods = ['POST'])
+def RefillConsumables():
+    data = request.get_json()
+    if (data['module'] == "NonRingSpareBay") or (data['module'] == "RingSpareBay"):
+        if data['action'] == "inst_count":
+            task = {'task':'inst_count'}
+            return json.loads(requests.post(eval(data['module'] + "Flask"), json = task).content)
+        elif data['action'] == "refill":
+            task = {'task':'refill', 'value':data['value']}
+            print(task)
+            requests.post(eval(data['module'] + "Flask"), json = task)
+            return 'True'
+    elif (data['module'] == "TempBrac"):
+        if data['action'] == "check_brac":
+            #check processinmg table2 camera if temp brac has alr present
+            DEBUG_bracpresense = False
+            return str(DEBUG_bracpresense)
+        elif data['action'] == "load_brac":
+            #trigger UR process to trasnfer temp brac from drybay pigeonhole#1 to processing table 2
+            #subprocess.call('python ~/all_ws/goldfinger_ws/src/bigbox_flask/ver2/ros_msg_publisher/Recheck_publisher.py', shell = True)
+            #
+            return 'True'
+    # return 'True'
 
 @app.route('/control_panel', methods = ['GET'])
 def control_panel():

@@ -101,18 +101,19 @@
                                     <th scope="row">Ring Spare Instruments</th>
                                     <td>Ring Spare Bay</td>
                                     <td>Wall D </td>
-                                    <td><center><a class="refillbtn" data-toggle="modal" data-target="#RingSpareBayModal">Press to Refill</a></center></td>
+                                    <td><center><a class="refillbtn" data-toggle="modal" data-target="#RingSpareBayModal" onclick="GETSpareBay('RingSpareBay')">Press to Refill</a></center></td>
                                 </tr>
                                 <tr class="table-active" id="NonRingSpareBay">
                                     <th scope="row">Non-Ring Spare Instruments</th>
                                     <td>Non-Ring Spare Bay</td>
                                     <td>Wall B</td>
-                                    <td><center><a class="refillbtn">Press to Refill</a></center></td>
+                                    <td><center><a class="refillbtn" data-toggle="modal" data-target="#NonRingSpareBayModal" onclick="GETSpareBay('NonRingSpareBay')">Press to Refill</a></center></td>
                                 </tr>
                                 <tr class="table-active" id="TempBracket">
                                     <th scope="row">Temp Bracket</th>
                                     <td>Ring Inspection Bay</td>
                                     <td>Wall A</td>
+                                    <td><center><a class="refillbtn" onclick="GETSpareBay('TempBrac')">Press to Load in</a></center></td>
                                 </tr>
                                 <tr class="table-active" id="TrayPaper">
                                     <th scope="row">50cm x 30cm Tray Paper</th>

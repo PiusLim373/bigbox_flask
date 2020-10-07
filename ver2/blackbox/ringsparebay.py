@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify
 from time import sleep
 app = Flask(__name__)
 
-RingInstrumentDict = {"ForcepArteryAdson":8, "ForcepArteryCrile": 8, "HolderNeedleMayoHegar": 8, "HolderNeedleCrilewood": 8, "ForcepTissueLittlewood": 8, "ForcepTissueStilles": 8, "ForcepTissueBabcock": 8, "ScissorDressingNurses": 8, "ScissorMayo": 8, "ScissorDissectingMetzenbaum": 8, "ForcepSpongeHoldingRampley": 8}
+RingInstrumentDict = {"ForcepArteryAdson":1, "ForcepArteryCrile": 2, "HolderNeedleMayoHegar": 3, "HolderNeedleCrilewood": 4, "ForcepTissueLittlewood": 5, "ForcepTissueStilles": 6, "ForcepTissueBabcock": 7, "ScissorDressingNurses": 8, "ScissorMayo": 1, "ScissorDissectingMetzenbaum": 2, "ForcepSpongeHoldingRampley": 3}
     
 @app.route('/get_status', methods = ['POST'])
 def get_status():
@@ -23,15 +23,12 @@ def get_status():
         x = data['value']
         RingInstrumentDict[x] -= 1
         return 'successfully update'
-
-@app.route('/refill', methods = ['POST'])
-def refill():
-    global RingInstrumentDict
-    incomingdata = request.get_json()
-    for x in incomingdata:
-        temp_dict = {x: incomingdata[x] + RingInstrumentDict[x]}
-        RingInstrumentDict.update(temp_dict)
-    return 'successfully updated' 
+    elif task == "refill":
+        print("refilling")
+        for x in data['value']:
+            temp_dict = {x: data['value'][x] + RingInstrumentDict[x]}
+            RingInstrumentDict.update(temp_dict)
+        return 'Successfully refilled' 
 
 if __name__ == "__main__":  
     app.run(debug=True, port=5006)

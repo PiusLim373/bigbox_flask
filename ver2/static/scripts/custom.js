@@ -321,6 +321,147 @@ function StartNewProcess(){
     });
 }
 
-function Refill(){
-    console.log($('#ForcepArteryAdsonRefill').val())
+function Refill(type){
+    if(type =="RingSpareBay" || type == "NonRingSpareBay"){
+        if (type == "RingSpareBay") {var InstList = ["ForcepArteryAdson", "ForcepArteryCrile", "HolderNeedleMayoHegar", "HolderNeedleCrilewood", "ForcepTissueLittlewood", "ForcepTissueStilles", "ForcepTissueBabcock", "ScissorDressingNurses", "ScissorMayo", "ScissorDissectingMetzenbaum", "ForcepSpongeHoldingRampley"];}
+        else if (type == "NonRingSpareBay") {var InstList =["TowelClipJones", "ForcepDissectingGillies", "ForcepDissectingMcindoe", "HandleBardParker", "RulerGraduatedMultipurpose", "SpearRedivac"];}
+        RefillDict = {}
+        for(var i=0; i<InstList.length;i++){
+            if ($('#' +InstList[i] +'Refill').val() != '0'){
+                RefillDict[InstList[i]] = parseInt($('#' +InstList[i] +'Refill').val())
+            }
+        }
+        if (Object.keys(RefillDict).length != 0){
+            var i = 0
+            var RefillMessage="You are about to refill: \n"
+            for (const x in RefillDict){
+                RefillMessage += RefillDict[x] + " x " + x + "\n";
+                i ++;
+            }
+            RefillMessage += "This action cannot be undone, please confirm to add."
+            if(confirm(RefillMessage)){
+                $.ajax({
+                    method:'POST',
+                    url:"/RefillConsumables",
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        "module": type,
+                        "action":"refill",
+                        'value':RefillDict
+                    }),
+                    success:function(respond){
+                        $("#" + type + "Modal").modal("hide");
+                    }
+                });
+            }
+        }
+        else{
+            alert("Nothing is loaded")
+            $("#" + type + "Modal").modal("hide");
+        }
+    }
+    else if(type =="TempBrac"){
+        var hasreturn = False
+        while (!hasreturn){
+            //Think of a way to keep popping up the alert() while waiting for temp brack to be transferred
+            alert("Process to trasnfer Temp Bracket to Processing Table 2 has been trigerred, please wait patiently...");
+        }
+        
+        
+        $.ajax({
+            method:'POST',
+            url:"/RefillConsumables",
+            contentType: 'application/json',
+            data: JSON.stringify({
+                "module": "TempBrac",
+                "action":"load_brac"
+            }),
+            success:function(respond){
+                hasreturn = True
+                alert("Temp Bracket has been trasnferred successfully.")
+            }
+        }); 
+    }
+    
+    
+    
+}
+
+function GETSpareBay(type){
+    if (type == "RingSpareBay"){
+        $.ajax({
+            method:'POST',
+            url:"/RefillConsumables",
+            contentType: 'application/json',
+            data: JSON.stringify({
+                "module": "RingSpareBay",
+                "action":"inst_count"
+              }),
+            success:function(respond){
+                for(const x in respond){
+                    if (respond[x] == 8){
+                        $('#'+x+'Remaining').html("Number of " + x +" presents in Spare Bay: " + respond[x] + " <font color='green'> (Fully Loaded)</font");
+                    }
+                    else{
+                        $('#'+x+'Remaining').html("Number of " + x +" presents in Spare Bay: " + respond[x]);
+                    }
+                    
+                    var RefillString = ""
+                    for (var i = 0; i <= 8 - respond[x]; i ++){
+                        RefillString += "<option>" + i +"</option>"
+                    }
+                    $('#'+x+'Refill').html(RefillString);
+                   
+                }
+            }
+        });
+    }
+    else if (type == "NonRingSpareBay"){
+        $.ajax({
+            method:'POST',
+            url:"/RefillConsumables",
+            contentType: 'application/json',
+            data: JSON.stringify({
+                "module": "NonRingSpareBay",
+                "action":"inst_count"
+              }),
+            success:function(respond){
+                for(const x in respond){
+                    if (respond[x] == 8){           //This amount might not be 8
+                        $('#'+x+'Remaining').html("Number of " + x +" presents in Spare Bay: " + respond[x] + " <font color='green'> (Fully Loaded)</font");
+                    }
+                    else{
+                        $('#'+x+'Remaining').html("Number of " + x +" presents in Spare Bay: " + respond[x]);
+                    }
+                    
+                    var RefillString = ""
+                    for (var i = 0; i <= 8 - respond[x]; i ++){
+                        RefillString += "<option>" + i +"</option>"
+                    }
+                    $('#'+x+'Refill').html(RefillString);
+                   
+                }
+            }
+        });
+    }
+    else if (type == "TempBrac"){
+        alert("Checking in progress, please wait patiently...")
+        $.ajax({
+            method:'POST',
+            url:"/RefillConsumables",
+            contentType: 'application/json',
+            data: JSON.stringify({
+                "module": "TempBrac",
+                "action":"check_brac"
+            }),
+            success:function(respond){
+                if (respond == "True"){
+                    alert("Temp Bracket has been loaded, no further action is required")
+                }
+                else{
+                    $("#TempBracModal").modal("show");
+                }
+            }
+        });   
+    }
 }
