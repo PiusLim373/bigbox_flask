@@ -113,42 +113,49 @@
                                     <th scope="row">Temp Bracket</th>
                                     <td>Ring Inspection Bay</td>
                                     <td>Wall A</td>
-                                    <td><center><a class="refillbtn" onclick="GETSpareBay('TempBrac')">Press to Load in</a></center></td>
+                                    <td><center><a class="refillbtn" data-toggle="modal" data-target="#TempBracModal">Press to Load in</a></center></td>
                                 </tr>
-                                <tr class="table-active" id="TrayPaper">
+                                <tr class="table-active" id="TrayPaperBay">
                                     <th scope="row">50cm x 30cm Tray Paper</th>
                                     <td>Tray Paper Bay</td>
                                     <td>Wall B</td>
+                                    <td><center><a class="refillbtn" data-toggle="modal" data-target="#TrayPaperBayModal" >Press to Load in</a></center></td>
                                 </tr>
-                                <tr class="table-active" id="WrappingPaper">
+                                <tr class="table-active" id="WrappingBayPaper">
                                     <th scope="row">30cm x 30cm Wrapping Crepe Paper</th>
                                     <td>Wrapping Bay</td>
                                     <td>Wall D</td>
+                                    <td><center><a class="refillbtn" data-toggle="modal" data-target="#WrappingBayPaperModal" >Press to Load in</a></center></td>
                                 </tr>
-                                <tr class="table-active" id="WrappingSealer">
+                                <tr class="table-active" id="WrappingBayTape">
                                     <th scope="row">3M Masking Tape</th>
                                     <td>Wrapping Bay</td>
                                     <td>Wall D</td>
+                                    <td><center><a class="refillbtn" data-toggle="modal" data-target="#WrappingBayTapeModal" >Press to Load in</a></center></td>
                                 </tr>
-                                <tr class="table-active" id="PrintedListWrapper">
+                                <tr class="table-active" id="PrinterBayWrapper">
                                     <th scope="row">30cm x 30cm Wrapping Crepe Paper</th>
                                     <td>Printer Bay</td>
                                     <td>Wall A</td>
+                                    <td><center><a class="refillbtn" data-toggle="modal" data-target="#PrinterBayWrapperModal" >Press to Load in</a></center></td>
                                 </tr>
-                                <tr class="table-active" id="A4Paper">
+                                <tr class="table-active" id="PrinterBayA4Paper">
                                     <th scope="row">A4 Paper</th>
                                     <td>Printer Bay</td>
                                     <td>Wall A</td>
+                                    <td><center><a class="refillbtn" data-toggle="modal" data-target="#PrinterBayA4PaperModal" >Press to Load in</a></center></td>
                                 </tr>
                                 <tr class="table-active" id="IndicatorDispenser">
                                     <th scope="row">3M Steam Indicator</th>
                                     <td>Indicator Dispenser</td>
                                     <td>Wall B</td>
+                                    <td><center><a class="refillbtn" data-toggle="modal" data-target="#IndicatorDispenserModal" >Press to Load in</a></center></td>
                                 </tr>
-                                <tr class="table-active" id="StickerTag">
+                                <tr class="table-active" id="StickerTagPrinter">
                                     <th scope="row">Sticker Tag</th>
                                     <td>Sticker Tag Printer</td>
                                     <td>Wall B</td>
+                                    <td><center><a class="refillbtn" data-toggle="modal" data-target="#StickerTagPrinterModal"  >Press to Load in</a></center></td>
                                 </tr>
                                 </tbody>
                             </table>
@@ -373,7 +380,7 @@
         source_info_status.onmessage = function(event){
             
             var data = JSON.parse(event.data);
-            console.log(data);
+            // console.log(data);
             $('#status').text(data.web_status_text);
             stage = parseInt(data.web_stage);
             if (data.pigeonhole_processing == -1){

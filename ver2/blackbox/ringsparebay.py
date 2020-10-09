@@ -12,7 +12,7 @@ def get_status():
     task = data['task']
     if task == "inst_count":
         return jsonify(RingInstrumentDict)
-    elif task =="consumables":
+    elif task =="consumables_check":
         enough = True
         for x in RingInstrumentDict:
             if RingInstrumentDict[x] < 6:

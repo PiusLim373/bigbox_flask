@@ -19,6 +19,12 @@ ConsumablesFlask = "http://127.0.0.1:5005/get_status"
 
 RingSpareBayFlask = "http://127.0.0.1:5006/get_status"
 NonRingSpareBayFlask = "http://127.0.0.1:5007/get_status"
+TrayPaperBayFlask = "http://127.0.0.1:5008/get_status"
+WrappingBayFlask = "http://127.0.0.1:5009/get_status"
+PrinterBayFlask = "http://127.0.0.1:5010/get_status"
+IndicatorDispenserFlask = "http://127.0.0.1:5011/get_status"
+StickerTagPrinterFlask = "http://127.0.0.1:5012/get_status"
+ProcessingTable2Flask = "http://127.0.0.1:5013/get_status"
 
 web_status_text = "Greetings, welcome to Bigbox! To continue, load in necessary items as instructed and follow the steps below. Starts by pressing the 'Check Consumables' button."
 web_stage = 0
@@ -32,6 +38,32 @@ def updateUI(message):
     global web_status_text
     web_status_text = message
     return True
+
+def GrabConsumables():
+    ConsumablesDict = {}
+    ModulesList = ["RingSpareBay", "NonRingSpareBay", "TempBracket", "TrayPaperBay", "WrappingBayPaper", "WrappingBayTape", "PrinterBayWrapper", "PrinterBayA4Paper", "IndicatorDispenser", "StickerTagPrinter"]
+    # ModulesList = ["RingSpareBay", "NonRingSpareBay"]
+    
+    for x in ModulesList:
+        task = {'task':'consumables_check'}
+        if x == "TempBracket":
+            ConsumablesDict.update({x:int(requests.post(ProcessingTable2Flask, json = task).content)})
+        elif x == "WrappingBayPaper":
+            task = {'task':'consumables_check_paper'}
+            ConsumablesDict.update({x:int(requests.post(WrappingBayFlask, json = task).content)})
+        elif x == "WrappingBayTape":
+            task = {'task':'consumables_check_tape'}
+            ConsumablesDict.update({x:int(requests.post(WrappingBayFlask, json = task).content)})
+        elif x == "PrinterBayWrapper":
+            task = {'task':'consumables_check_wrapper'}
+            ConsumablesDict.update({x:int(requests.post(PrinterBayFlask, json = task).content)})
+        elif x == "PrinterBayA4Paper":
+            task = {'task':'consumables_check_a4paper'}
+            ConsumablesDict.update({x:int(requests.post(PrinterBayFlask, json = task).content)})
+        else:
+            ConsumablesDict.update({x:int(requests.post(eval(x + "Flask"), json = task).content)})
+    print(ConsumablesDict)
+    return ConsumablesDict
 
 @app.route('/statusSSE')
 def statusSSE():
@@ -55,14 +87,7 @@ def statusSSE():
 @app.route('/CheckConsumables', methods = ['GET', 'POST'])
 def CheckConsumables():
     global consumables_error_list, consumables_SMACHRun
-    # collect all consumables data from diff modules, using hardcoded variables as of now
-        # eg:
-        #   for x in ConsumablesDict:
-        #       data = requests.post(x + URL + /get_consumable , json = data)
-        #       ConsumablesDict[x] = int(data.text)
-        #
-    task = {'task': 'consumables_presense'}
-    ConsumablesDict = json.loads(requests.post(ConsumablesFlask, json = task).content)
+    ConsumablesDict = GrabConsumables()
     if request.method == 'GET': #for smach access
         print("SMACHRun chg to true")
         consumables_SMACHRun = True
@@ -87,9 +112,9 @@ def CheckConsumables():
             sleep(1)
             return 'True' # return true to smach
     else: # for webui access
-        success = 1
-        if len(consumables_error_list) != 0:
-            success = 0
+        success = 0
+        if len(consumables_error_list) == 0:
+            success = 1
         if not consumables_SMACHRun:
             success = 2
         response = {'check_success': success, 'ConsumablesDict': ConsumablesDict}
@@ -162,20 +187,33 @@ def RefillConsumables():
             return json.loads(requests.post(eval(data['module'] + "Flask"), json = task).content)
         elif data['action'] == "refill":
             task = {'task':'refill', 'value':data['value']}
-            print(task)
             requests.post(eval(data['module'] + "Flask"), json = task)
             return 'True'
     elif (data['module'] == "TempBrac"):
-        if data['action'] == "check_brac":
-            #check processinmg table2 camera if temp brac has alr present
-            DEBUG_bracpresense = False
-            return str(DEBUG_bracpresense)
-        elif data['action'] == "load_brac":
-            #trigger UR process to trasnfer temp brac from drybay pigeonhole#1 to processing table 2
-            #subprocess.call('python ~/all_ws/goldfinger_ws/src/bigbox_flask/ver2/ros_msg_publisher/Recheck_publisher.py', shell = True)
-            #
+        if data['action'] == "reload":
+            task = {'task':'reload'}
+            requests.post(ProcessingTable2Flask, json = task)
             return 'True'
-    # return 'True'
+    elif(data['module'] == "WrappingBayPaper" or data['module'] == "WrappingBayTape"):
+        if data['action'] == "reload_paper":
+            task = {'task':'reload_paper'}
+        elif data['action'] == "reload_tape":
+            task = {'task':'reload_tape'}
+        requests.post(WrappingBayFlask, json = task)
+        return 'True'
+    
+    elif(data['module'] == "PrinterBayWrapper" or data['module'] == "PrinterBayA4Paper"):
+        if data['action'] == "reload_wrapper":
+            task = {'task':'reload_wrapper'}
+        elif data['action'] == "reload_a4paper":
+            task = {'task':'reload_a4paper'}
+        requests.post(PrinterBayFlask, json = task)
+        return 'True'
+
+    elif(data['module'] == "TrayPaperBay" or data['module'] == "IndicatorDispenser" or data['module'] == "StickerTagPrinter"):
+        task = {'task': data['action']}
+        requests.post(eval(data['module'] + "Flask"), json = task)
+        return 'True'
 
 @app.route('/control_panel', methods = ['GET'])
 def control_panel():

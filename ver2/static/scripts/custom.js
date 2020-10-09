@@ -57,6 +57,7 @@ function UpdateCheckConsumablesDiv(){
             'from':'webui'
         },
         success:function(respond){
+            console.log(respond)
             if(respond['check_success'] == 1){
                 $('#processfeedback').removeClass("bg-info");
                 $('#processfeedback').removeClass("bg-danger");
@@ -320,7 +321,12 @@ function StartNewProcess(){
         }
     });
 }
-
+function activateUR(){
+     
+    while(confirm("UR processed trigerred, please wait patiently...")){}
+    // console.log("done waiting");
+    return value;
+}
 function Refill(type){
     if(type =="RingSpareBay" || type == "NonRingSpareBay"){
         if (type == "RingSpareBay") {var InstList = ["ForcepArteryAdson", "ForcepArteryCrile", "HolderNeedleMayoHegar", "HolderNeedleCrilewood", "ForcepTissueLittlewood", "ForcepTissueStilles", "ForcepTissueBabcock", "ScissorDressingNurses", "ScissorMayo", "ScissorDissectingMetzenbaum", "ForcepSpongeHoldingRampley"];}
@@ -350,7 +356,9 @@ function Refill(type){
                         'value':RefillDict
                     }),
                     success:function(respond){
+                        alert("Loading successful");
                         $("#" + type + "Modal").modal("hide");
+                        CheckConsumables()
                     }
                 });
             }
@@ -361,29 +369,103 @@ function Refill(type){
         }
     }
     else if(type =="TempBrac"){
-        var hasreturn = False
-        while (!hasreturn){
-            //Think of a way to keep popping up the alert() while waiting for temp brack to be transferred
-            alert("Process to trasnfer Temp Bracket to Processing Table 2 has been trigerred, please wait patiently...");
-        }
-        
-        
+        $("#TempBracModal2").modal("show");
         $.ajax({
             method:'POST',
             url:"/RefillConsumables",
             contentType: 'application/json',
             data: JSON.stringify({
                 "module": "TempBrac",
-                "action":"load_brac"
+                "action":"reload"
             }),
             success:function(respond){
-                hasreturn = True
-                alert("Temp Bracket has been trasnferred successfully.")
+                alert("Loading successful");
+                $("#TempBracModal2").modal("hide");
+                $("#TempBracModal").modal("hide");
+                CheckConsumables()
             }
-        }); 
+        });
     }
-    
-    
+    else if(type == "TrayPaperBay" || type == "IndicatorDispenser"|| type == "StickerTagPrinter"){
+        $.ajax({
+            method:'POST',
+            url:"/RefillConsumables",
+            contentType: 'application/json',
+            data: JSON.stringify({
+                "module": type,
+                "action":"reload"
+            }),
+            success:function(respond){
+                alert("Loading successful");
+                $("#" + type + "Modal").modal("hide");
+                CheckConsumables()
+            }
+        });
+    }
+    else if(type == "WrappingBayPaper"){
+        $.ajax({
+            method:'POST',
+            url:"/RefillConsumables",
+            contentType: 'application/json',
+            data: JSON.stringify({
+                "module": type,
+                "action":"reload_paper"
+            }),
+            success:function(respond){
+                alert("Loading successful");
+                $("#" + type + "Modal").modal("hide");
+                CheckConsumables()
+            }
+        });
+    }
+    else if(type == "WrappingBayTape"){
+        $.ajax({
+            method:'POST',
+            url:"/RefillConsumables",
+            contentType: 'application/json',
+            data: JSON.stringify({
+                "module": type,
+                "action":"reload_tape"
+            }),
+            success:function(respond){
+                alert("Loading successful");
+                $("#" + type + "Modal").modal("hide");
+                CheckConsumables()
+            }
+        });
+    }
+    else if(type == "PrinterBayWrapper"){
+        $.ajax({
+            method:'POST',
+            url:"/RefillConsumables",
+            contentType: 'application/json',
+            data: JSON.stringify({
+                "module": type,
+                "action":"reload_wrapper"
+            }),
+            success:function(respond){
+                alert("Loading successful");
+                $("#" + type + "Modal").modal("hide");
+                CheckConsumables()
+            }
+        });
+    }
+    else if(type == "PrinterBayA4Paper"){
+        $.ajax({
+            method:'POST',
+            url:"/RefillConsumables",
+            contentType: 'application/json',
+            data: JSON.stringify({
+                "module": type,
+                "action":"reload_a4paper"
+            }),
+            success:function(respond){
+                alert("Loading successful");
+                $("#" + type + "Modal").modal("hide");
+                CheckConsumables()
+            }
+        });
+    }
     
 }
 
@@ -443,25 +525,5 @@ function GETSpareBay(type){
                 }
             }
         });
-    }
-    else if (type == "TempBrac"){
-        alert("Checking in progress, please wait patiently...")
-        $.ajax({
-            method:'POST',
-            url:"/RefillConsumables",
-            contentType: 'application/json',
-            data: JSON.stringify({
-                "module": "TempBrac",
-                "action":"check_brac"
-            }),
-            success:function(respond){
-                if (respond == "True"){
-                    alert("Temp Bracket has been loaded, no further action is required")
-                }
-                else{
-                    $("#TempBracModal").modal("show");
-                }
-            }
-        });   
     }
 }

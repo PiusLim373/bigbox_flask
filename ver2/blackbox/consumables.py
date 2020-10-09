@@ -3,9 +3,9 @@ from flask import Flask, request, jsonify
 from time import sleep
 app = Flask(__name__)
 
-RingSpareBayCon = 1
+RingSpareBayCon = 0
 NonRingSpareBayCon = 1 
-TempBracketCon = 1
+TempBracketCon = 0
 TrayPaperCon = 1
 WrappingPaperCon = 1
 WrappingSealerCon = 1

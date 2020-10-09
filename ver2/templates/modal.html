@@ -338,7 +338,7 @@
               <div class="col-md-4">
                   <br>
                   <p> Temp Brac not detected.</p>
-                  <p> Load 1 x Temp Bracket at DryBay PigeonHole #1 and press the "Load-in" button below.</p>
+                  <p> Load 1 x Temp Bracket at WetBay PigeonHole #1 and press the "Load-in" button below.</p>
               </div>
           </div> 
           
@@ -346,6 +346,254 @@
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary" onclick="Refill('TempBrac')">Load-in</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal" data-backdrop="static" id="TempBracModal2" tabindex="-2" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog " role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Transferring Temp Bracket</h5>
+      </div>
+      <div class="modal-body">
+          <div class="row">
+              <div class="col-md-12">
+                  <p> Temp Bracket is being transferred at the moment, please wait patiently...</p>
+                  <p><font color="red"> This message will dismiss itself once transfer has completed</font></p>
+              </div>
+          </div> 
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade bd-example-modal-lg" id="TrayPaperBayModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Loading Trap Paper</h5>
+      </div>
+      <div class="modal-body">
+          <div class="row">
+              <div class="col-md-4">
+                  <center>
+                      <img class="responsive" src="https://via.placeholder.com/150">
+                  </center>
+              </div>
+              <div class="col-md-4">
+                <center>
+                    <img class="responsive" src="https://via.placeholder.com/150">
+                </center>
+            </div>
+              <div class="col-md-4">
+                  <br>
+                  <p>Load in 50cm x 30cm Crepe Paper at the Tray Paper Bay as indicated and press the "Complete Load in" button below to continue.</p>
+              </div>
+          </div> 
+          
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="Refill('TrayPaperBay')">Complete Load In</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade bd-example-modal-lg" id="WrappingBayPaperModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Loading Wrapping Paper</h5>
+      </div>
+      <div class="modal-body">
+          <div class="row">
+              <div class="col-md-4">
+                  <center>
+                      <img class="responsive" src="https://via.placeholder.com/150">
+                  </center>
+              </div>
+              <div class="col-md-4">
+                <center>
+                    <img class="responsive" src="https://via.placeholder.com/150">
+                </center>
+            </div>
+              <div class="col-md-4">
+                  <br>
+                  <p>Load in 30cm x 30cm Crepe Paper at the Wrapping Bay as indicated and press the "Complete Load in" button below to continue.</p>
+              </div>
+          </div> 
+          
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="Refill('WrappingBayPaper')">Complete Load In</button>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="modal fade bd-example-modal-lg" id="WrappingBayTapeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Loading 3M Masking Tape</h5>
+      </div>
+      <div class="modal-body">
+          <div class="row">
+              <div class="col-md-4">
+                  <center>
+                      <img class="responsive" src="https://via.placeholder.com/150">
+                  </center>
+              </div>
+              <div class="col-md-4">
+                <center>
+                    <img class="responsive" src="https://via.placeholder.com/150">
+                </center>
+            </div>
+              <div class="col-md-4">
+                  <br>
+                  <p>Load in 3M Masking Tape at the Wrapping Bay as indicated and press the "Complete Load in" button below to continue.</p>
+              </div>
+          </div> 
+          
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="Refill('WrappingBayTape')">Complete Load In</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade bd-example-modal-lg" id="PrinterBayWrapperModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Loading Printed List Wrapper</h5>
+      </div>
+      <div class="modal-body">
+          <div class="row">
+              <div class="col-md-4">
+                  <center>
+                      <img class="responsive" src="https://via.placeholder.com/150">
+                  </center>
+              </div>
+              <div class="col-md-4">
+                <center>
+                    <img class="responsive" src="https://via.placeholder.com/150">
+                </center>
+            </div>
+              <div class="col-md-4">
+                  <br>
+                  <p>Load in 30cm x 30cm Crepe Paper at the Printer Bay as indicated and press the "Complete Load in" button below to continue.</p>
+              </div>
+          </div> 
+          
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="Refill('PrinterBayWrapper')">Complete Load In</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade bd-example-modal-lg" id="PrinterBayA4PaperModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Loading A4 Paper</h5>
+      </div>
+      <div class="modal-body">
+          <div class="row">
+              <div class="col-md-4">
+                  <center>
+                      <img class="responsive" src="https://via.placeholder.com/150">
+                  </center>
+              </div>
+              <div class="col-md-4">
+                <center>
+                    <img class="responsive" src="https://via.placeholder.com/150">
+                </center>
+            </div>
+              <div class="col-md-4">
+                  <br>
+                  <p>Load in A4 Paper at the Printer Bay as indicated and press the "Complete Load in" button below to continue.</p>
+              </div>
+          </div> 
+          
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="Refill('PrinterBayA4Paper')">Complete Load In</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade bd-example-modal-lg" id="IndicatorDispenserModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Loading 3M Steam Indicator</h5>
+      </div>
+      <div class="modal-body">
+          <div class="row">
+              <div class="col-md-4">
+                  <center>
+                      <img class="responsive" src="https://via.placeholder.com/150">
+                  </center>
+              </div>
+              <div class="col-md-4">
+                <center>
+                    <img class="responsive" src="https://via.placeholder.com/150">
+                </center>
+            </div>
+              <div class="col-md-4">
+                  <br>
+                  <p>Load in 3M Steam Indicator at the Indicator Dispenser as indicated and press the "Complete Load in" button below to continue.</p>
+              </div>
+          </div> 
+          
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="Refill('IndicatorDispenser')">Complete Load In</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade bd-example-modal-lg" id="StickerTagPrinterModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Loading Sticker Tag</h5>
+      </div>
+      <div class="modal-body">
+          <div class="row">
+              <div class="col-md-4">
+                  <center>
+                      <img class="responsive" src="https://via.placeholder.com/150">
+                  </center>
+              </div>
+              <div class="col-md-4">
+                <center>
+                    <img class="responsive" src="https://via.placeholder.com/150">
+                </center>
+            </div>
+              <div class="col-md-4">
+                  <br>
+                  <p>Load in Sticker Tag at the Sticker Tag Printer as indicated and press the "Complete Load in" button below to continue.</p>
+              </div>
+          </div> 
+          
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" onclick="Refill('StickerTagPrinter')">Complete Load In</button>
       </div>
     </div>
   </div>
