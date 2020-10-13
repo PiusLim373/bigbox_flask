@@ -10,6 +10,7 @@ app = Flask(__name__)
 app.secret_key = "dummysecretkey"
 
 LastMaintenanceTime = datetime.datetime.now()
+LastRefillTime = datetime.datetime.now()
 
 # flask url for all modules
 WetBayFlask = "http://127.0.0.1:5002/get_status"
@@ -115,6 +116,7 @@ def CheckConsumables():
         success = 0
         if len(consumables_error_list) == 0:
             success = 1
+            
         if not consumables_SMACHRun:
             success = 2
         response = {'check_success': success, 'ConsumablesDict': ConsumablesDict}
@@ -192,6 +194,11 @@ def RefillConsumables():
     elif (data['module'] == "TempBrac"):
         if data['action'] == "reload":
             task = {'task':'reload'}
+            return str(requests.post(ProcessingTable2Flask, json = task).content)
+        elif data['action'] == "consumables_check":
+            task = {'task':'consumables_check'}
+            sleep(5)
+            print("returning")
             requests.post(ProcessingTable2Flask, json = task)
             return 'True'
     elif(data['module'] == "WrappingBayPaper" or data['module'] == "WrappingBayTape"):
@@ -266,8 +273,14 @@ def SMACHPing():
 @app.route('/index', methods = ['GET'])
 def index():
     if (not g.user) or (g.user.username != "admin"):
-        return redirect(url_for('login'))
+        return redirect(url_for('login')) 
     return render_template('index.html')
+
+@app.route('/refill', methods = ['GET'])
+def refill():
+    if not g.user:
+        return redirect(url_for('login'))
+    return render_template('refill.html')
 
 @app.route('/spawn_modal', methods = ['GET'])
 def spawn_modal():
@@ -275,10 +288,13 @@ def spawn_modal():
 
 @app.route('/MaintenanceTime', methods = ['GET', 'POST'])
 def MaintenanceTime():
-    global LastMaintenanceTime
+    global LastMaintenanceTime, LastRefillTime
     if request.method == 'GET':
-        timestamp = (LastMaintenanceTime - datetime.datetime(1970, 1, 1)).total_seconds()
-        return str(timestamp)
+        timestamp_maintenance = (LastMaintenanceTime - datetime.datetime(1970, 1, 1)).total_seconds()
+        timestamp_refill = (LastRefillTime - datetime.datetime(1970, 1, 1)).total_seconds()
+        
+        returndict = {'timestamp_refill':timestamp_refill, 'timestamp_maintenance': timestamp_maintenance}
+        return jsonify(returndict)
 
 ###################### For User logging
 

@@ -1,0 +1,434 @@
+<html lang="en">
+
+<head>
+    <title>BigBox Debug Page</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/all.css">
+    <link rel="stylesheet" href="static/css/custom.css">
+    <script src="static/scripts/popper.min.js"></script>
+    <script src="static/scripts/jquery-3.5.1.slim.min.js"></script>
+    <script src="static/scripts/bootstrap.min.js"></script>
+    <script src="static/scripts/custom.js"></script>
+</head>
+
+<body>
+    <br>
+    <br>
+    <br>
+    <div class="container">
+        <div class="row">
+            <div class=col-md-12 >
+                <h1 class="display-3">Bigbox Refill Centre</h1>
+                <div style="width: 100%;">
+                    <p class="lead" style="display:inline-block;">Greetings! you are now logged in as: <font color="red">{{g.user.username}}</font> </p>
+                    <button type="button" class="btn btn-primary btn-sm logout-btn" onclick="Logout()">Logout</button>
+                </div>
+                <hr class="my-4">
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card bg-secondary">
+                    <div class="card-header">Ring Spare Bay
+                        <a data-toggle="collapse" data-target="#RingSpareBayCollapse"><i class="fas fa-chevron-down dropdown-arrow"  id="RingSpareBayCollapseDropdownBtn" onclick="CollapseDropdown('RingSpareBay')"></i></a>
+                    </div>
+                    <div class="collapse" id="RingSpareBayCollapse">
+                        <div class="card-body" >
+                            <div class="row">
+                                <div class="col-md-12"><h5>Forcep Artery Adson</h5></div>
+                                <div class="col-md-4">
+                                    <center>
+                                        <img class="responsive" src="https://via.placeholder.com/150">
+                                    </center>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <p id="ForcepArteryAdsonRemaining">Number of Forcep Artery Adson presents in Spare Bay: </p>
+                                        <label for="exampleSelect1">Number of Forcep Artery Adson loaded in:</label>
+                                        <select class="form-control" id="ForcepArteryAdsonRefill">
+                                        </select>
+                                      </div>
+                                </div>
+                            </div> 
+                            <br>
+                            <div class="row">
+                                <div class="col-md-12"><h5>Forcep Artery Crile</h5></div>
+                                <div class="col-md-4">
+                                    <center>
+                                        <img class="responsive" src="https://via.placeholder.com/150">
+                                    </center>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <p id="ForcepArteryCrileRemaining">Number of Forcep Artery Crile presents in Spare Bay: </p>
+                                        <label for="exampleSelect1">Number of Forcep Artery Crile loaded in:</label>
+                                        <select class="form-control" id="ForcepArteryCrileRefill">
+                                        </select>
+                                      </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                              <div class="col-md-12"><h5>Holder Needle Mayo Hegar</h5></div>
+                              <div class="col-md-4">
+                                  <center>
+                                      <img class="responsive" src="https://via.placeholder.com/150">
+                                  </center>
+                              </div>
+                              <div class="col-md-8">
+                                  <div class="form-group">
+                                      <p id="HolderNeedleMayoHegarRemaining"></p>
+                                      <label for="exampleSelect1">Number of Holder Needle Mayo Hegar loaded in:</label>
+                                      <select class="form-control" id="HolderNeedleMayoHegarRefill">
+                                      </select>
+                                    </div>
+                              </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                              <div class="col-md-12"><h5>Holder Needle Crilewood</h5></div>
+                              <div class="col-md-4">
+                                  <center>
+                                      <img class="responsive" src="https://via.placeholder.com/150">
+                                  </center>
+                              </div>
+                              <div class="col-md-8">
+                                  <div class="form-group">
+                                      <p id="HolderNeedleCrilewoodRemaining"></p>
+                                      <label for="exampleSelect1">Number of Holder Needle Crilewood loaded in:</label>
+                                      <select class="form-control" id="HolderNeedleCrilewoodRefill">
+                                      </select>
+                                    </div>
+                              </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                              <div class="col-md-12"><h5>Forcep Tissue Littlewood</h5></div>
+                              <div class="col-md-4">
+                                  <center>
+                                      <img class="responsive" src="https://via.placeholder.com/150">
+                                  </center>
+                              </div>
+                              <div class="col-md-8">
+                                  <div class="form-group">
+                                      <p id="ForcepTissueLittlewoodRemaining"></p>
+                                      <label for="exampleSelect1">Number of Forcep Tissue Littlewood loaded in:</label>
+                                      <select class="form-control" id="ForcepTissueLittlewoodRefill">
+                                      </select>
+                                    </div>
+                              </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                              <div class="col-md-12"><h5>Forcep Tissue Stilles</h5></div>
+                              <div class="col-md-4">
+                                  <center>
+                                      <img class="responsive" src="https://via.placeholder.com/150">
+                                  </center>
+                              </div>
+                              <div class="col-md-8">
+                                  <div class="form-group">
+                                      <p id="ForcepTissueStillesRemaining"></p>
+                                      <label for="exampleSelect1">Number of Forcep Tissue Stilles loaded in:</label>
+                                      <select class="form-control" id="ForcepTissueStillesRefill">
+                                      </select>
+                                    </div>
+                              </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                              <div class="col-md-12"><h5>Forcep Tissue Babcock</h5></div>
+                              <div class="col-md-4">
+                                  <center>
+                                      <img class="responsive" src="https://via.placeholder.com/150">
+                                  </center>
+                              </div>
+                              <div class="col-md-8">
+                                  <div class="form-group">
+                                      <p id="ForcepTissueBabcockRemaining"></p>
+                                      <label for="exampleSelect1">Number of Forcep Tissue Babcock loaded in:</label>
+                                      <select class="form-control" id="ForcepTissueBabcockRefill">
+                                      </select>
+                                    </div>
+                              </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                              <div class="col-md-12"><h5>Scissor Dressing Nurses</h5></div>
+                              <div class="col-md-4">
+                                  <center>
+                                      <img class="responsive" src="https://via.placeholder.com/150">
+                                  </center>
+                              </div>
+                              <div class="col-md-8">
+                                  <div class="form-group">
+                                      <p id="ScissorDressingNursesRemaining"></p>
+                                      <label for="exampleSelect1">Number of Scissor Dressing Nurses loaded in:</label>
+                                      <select class="form-control" id="ScissorDressingNursesRefill">
+                                      </select>
+                                    </div>
+                              </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                              <div class="col-md-12"><h5>Scissor Mayo</h5></div>
+                              <div class="col-md-4">
+                                  <center>
+                                      <img class="responsive" src="https://via.placeholder.com/150">
+                                  </center>
+                              </div>
+                              <div class="col-md-8">
+                                  <div class="form-group">
+                                      <p id="ScissorMayoRemaining"></p>
+                                      <label for="exampleSelect1">Number of Scissor Mayo loaded in:</label>
+                                      <select class="form-control" id="ScissorMayoRefill">
+                                      </select>
+                                    </div>
+                              </div>
+                            </div>
+                            <br>
+                            
+                            <div class="row">
+                              <div class="col-md-12"><h5>Scissor Dissecting Metzenbaum</h5></div>
+                              <div class="col-md-4">
+                                  <center>
+                                      <img class="responsive" src="https://via.placeholder.com/150">
+                                  </center>
+                              </div>
+                              <div class="col-md-8">
+                                  <div class="form-group">
+                                      <p id="ScissorDissectingMetzenbaumRemaining"></p>
+                                      <label for="exampleSelect1">Number of Scissor Dissecting Metzenbaum loaded in:</label>
+                                      <select class="form-control" id="ScissorDissectingMetzenbaumRefill">
+                                      </select>
+                                    </div>
+                              </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                              <div class="col-md-12"><h5>Forcep Sponge-Holding Rampley</h5></div>
+                              <div class="col-md-4">
+                                  <center>
+                                      <img class="responsive" src="https://via.placeholder.com/150">
+                                  </center>
+                              </div>
+                              <div class="col-md-8">
+                                  <div class="form-group">
+                                      <p id="ForcepSpongeHoldingRampleyRemaining"></p>
+                                      <label for="exampleSelect1">Number of Forcep Sponge-Holding Rampley loaded in:</label>
+                                      <select class="form-control" id="ForcepSpongeHoldingRampleyRefill">
+                                      </select>
+                                    </div>
+                              </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6"><button type="button" class="btn btn-primary dryweybaybtn" onclick="CollapseRefill('RingSpareBay')" >Refill Ring Spare Bay</button></div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card bg-secondary">
+                    <div class="card-header">Non Ring Spare Bay
+                        <a data-toggle="collapse" data-target="#NonRingSpareBayCollapse"><i class="fas fa-chevron-down dropdown-arrow"  id="NonRingSpareBayCollapseDropdownBtn" onclick="CollapseDropdown('NonRingSpareBay')"></i></a>
+                    </div>
+                    <div class="collapse" id="NonRingSpareBayCollapse">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12"><h5>Towel Clip Jones</h5></div>
+                                <div class="col-md-4">
+                                    <center>
+                                        <img class="responsive" src="https://via.placeholder.com/150">
+                                    </center>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <p id="TowelClipJonesRemaining"></p>
+                                        <label for="exampleSelect1">Number of Towel Clip Jones loaded in:</label>
+                                        <select class="form-control" id="TowelClipJonesRefill">
+                                        </select>
+                                      </div>
+                                </div>
+                            </div> 
+                            <br>
+                            <div class="row">
+                              <div class="col-md-12"><h5>Forcep Dissecting Gillies</h5></div>
+                              <div class="col-md-4">
+                                  <center>
+                                      <img class="responsive" src="https://via.placeholder.com/150">
+                                  </center>
+                              </div>
+                              <div class="col-md-8">
+                                  <div class="form-group">
+                                      <p id="ForcepDissectingGilliesRemaining"></p>
+                                      <label for="exampleSelect1">Number of Forcep Dissecting Gillies loaded in:</label>
+                                      <select class="form-control" id="ForcepDissectingGilliesRefill">
+                                      </select>
+                                    </div>
+                              </div>
+                            </div> 
+                            <br>
+                            <div class="row">
+                                <div class="col-md-12"><h5>Forcep Dissecting Mcindoe</h5></div>
+                                <div class="col-md-4">
+                                    <center>
+                                        <img class="responsive" src="https://via.placeholder.com/150">
+                                    </center>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <p id="ForcepDissectingMcindoeRemaining"></p>
+                                        <label for="exampleSelect1">Number of Forcep Dissecting Mcindoe loaded in:</label>
+                                        <select class="form-control" id="ForcepDissectingMcindoeRefill">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div> 
+                            <br>
+                            <div class="row">
+                                <div class="col-md-12"><h5>Handle Bard Parker</h5></div>
+                                <div class="col-md-4">
+                                    <center>
+                                        <img class="responsive" src="https://via.placeholder.com/150">
+                                    </center>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <p id="HandleBardParkerRemaining"></p>
+                                        <label for="exampleSelect1">Number of Handle Bard Parker loaded in:</label>
+                                        <select class="form-control" id="HandleBardParkerRefill">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-12"><h5>Ruler Graduated Multipurpose</h5></div>
+                                <div class="col-md-4">
+                                    <center>
+                                        <img class="responsive" src="https://via.placeholder.com/150">
+                                    </center>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <p id="RulerGraduatedMultipurposeRemaining"></p>
+                                        <label for="exampleSelect1">Number of Ruler Graduated Multipurpose loaded in:</label>
+                                        <select class="form-control" id="RulerGraduatedMultipurposeRefill">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-12"><h5>Spear Redivac</h5></div>
+                                <div class="col-md-4">
+                                    <center>
+                                        <img class="responsive" src="https://via.placeholder.com/150">
+                                    </center>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="form-group">
+                                        <p id="SpearRedivacRemaining"></p>
+                                        <label for="exampleSelect1">Number of Spear Redivac loaded in:</label>
+                                        <select class="form-control" id="SpearRedivacRefill">
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6"><button type="button" class="btn btn-primary dryweybaybtn" onclick="CollapseRefill('NonRingSpareBay')" >Refill Non Ring Spare Bay</button></div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card bg-secondary">
+                    <div class="card-header">Temp Bracket
+                        <a data-toggle="collapse" data-target="#TempBracCollapse"><i class="fas fa-chevron-down dropdown-arrow"  id="TempBracDropdownBtn" onclick="CollapseDropdown('TempBrac')"></i></a>
+                    </div>
+                    <div class="collapse" id="TempBracCollapse1">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p class="card-text">A Temp Bracket has been loaded onto Processing Table 2, no action needed</p>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6"><button type="button" class="btn btn-primary dryweybaybtn" onclick="CollapseRefill('NonRingSpareBay')" >Close</button></div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                    <div class="collapse" id="TempBracCollapse2">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p class="card-text">Please load 1 x Temp Bracket at WetBay PigeonHole #1 as shown below and press the "Load-in Temp Bracket" button below.</p>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <center><img class="responsive" src="https://via.placeholder.com/150"></center>
+                                </div>
+                                <div class="col-md-6">
+                                    <center><img class="responsive" src="https://via.placeholder.com/150"></center>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6"><button type="button" class="btn btn-primary dryweybaybtn" onclick="CollapseRefill('NonRingSpareBay')" >Load-in Temp Backet</button></div>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal fade bd-example-modal-lg"  id="CheckingBracModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog " role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLabel">Checking for Temp Bracket</h5>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-12">
+                        <p> System is checking for Temp Bracket, <font color="red">please wait patiently...</font></p>
+                    </div>
+                </div> 
+            </div>
+          </div>
+        </div>
+    </div>
+</body>
+
+
+
+  
+</html>
+
+

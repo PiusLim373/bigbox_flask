@@ -46,7 +46,7 @@ function HideOthersExcept(){
 }
 
 function CardHeaderSuccess(div_id){
-    $('#' + div_id).append('<i class="fas fa-check-circle  align-right"></i>');
+    $('#' + div_id).append('<i class="fas fa-check-circle  align-right" id="greentick"></i>');
 }
 
 function UpdateCheckConsumablesDiv(){
@@ -77,6 +77,7 @@ function UpdateCheckConsumablesDiv(){
                 $('#processfeedback').addClass("bg-danger");
                 $('#checkconsumablescard').removeClass("card-header-success");
                 $('#checkconsumablescard').addClass("card-header-danger");
+                $('#greentick').remove();
                 $('#checkconsumablesfailtext').removeClass("hide");
                 for (var key in respond['ConsumablesDict']){
                     if(respond['ConsumablesDict'][key] == 1){
@@ -526,4 +527,52 @@ function GETSpareBay(type){
             }
         });
     }
+}
+
+function CollapseDropdown(type){
+    if (!$('#' + type +'Collapse').hasClass('show')){
+        $('#' + type +'CollapseDropdownBtn').removeClass('fa-chevron-down');
+        $('#' + type +'CollapseDropdownBtn').addClass('fa-chevron-up');
+    }
+    else{
+        $('#' + type +'CollapseDropdownBtn').removeClass('fa-chevron-up');
+        $('#' + type +'CollapseDropdownBtn').addClass('fa-chevron-down');
+    }
+    if (type == 'RingSpareBay' || type == 'NonRingSpareBay'){
+        GETSpareBay(type);
+    }
+    else if(type == 'TempBrac'){
+        $('#CheckingBracModal').show();
+
+        $.ajax({
+            method:'POST',
+            url:"/RefillConsumables",
+            contentType: 'application/json',
+            data: JSON.stringify({
+                "module": "TempBrac",
+                "action":"consumables_check"
+              }),
+            success:function(respond){
+                console.log("returned!");
+                if (respond == 'True'){
+                    $("#CheckingBracModal").modal("hide");
+                    console.log("hidden");
+                    $('#TempBracCollapse1').collapse("show");
+                }
+                else{
+                    $("#CheckingBracModal").modal("hide");
+                    console.log("hidden");
+                    $('#TempBracCollapse2').collapse("show")
+                }
+            }
+        });
+    }
+    
+}
+
+function CollapseRefill(type){
+    Refill(type);
+    $('#' + type + 'Collapse').collapse("hide");
+    $('#' + type +'CollapseDropdownBtn').removeClass('fa-chevron-up');
+    $('#' + type +'CollapseDropdownBtn').addClass('fa-chevron-down');
 }

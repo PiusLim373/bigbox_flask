@@ -25,7 +25,8 @@
     <br>
     <div class="container">
         <div class="row">
-            <div class="jumbotron vertical-center">
+            <!-- <div class="jumbotron vertical-center"> -->
+            <div class="jumbotron">
                 <h1 class="display-3">Bigbox</h1>
                 <p class="lead">Welcome to Bigbox! You are now logged in as: <font color="red">{{g.user.username}}</font></p>
                 <button type="button" class="btn btn-primary btn-sm logout-btn" onclick="Logout()">Logout</button>
@@ -35,21 +36,32 @@
                 <div class="row">
                     <div class="col-md-6">
                         <div class="card text-white bg-dark mb-3" >
-                            <div class="card-header">Maintenance</div>
+                            <div class="card-header">Daily Routine - Consumables Refill</div>
                             <div class="card-body">
-                              <p class="card-text">Unlock all service doors and all modules doors for cleaning or consumables refill.</p>
-                              <p class="card-text" id="lastmain">Last maintenance since: </p>
-                              <button type="button" class="btn btn-info btn-lg dryweybaybtn" onclick="location.href='/control_panel';">Press for Maintenance</button>
+                              <p class="card-text">Check consumables availability, refill if needed.</p>
+                              <p class="card-text" id="lastrefill">Last refill since: </p>
+                              <button type="button" class="btn btn-info btn-lg dryweybaybtn" onclick="location.href='/refill';">Press for Consumables Refill</button>
                             </div>
                         </div>
                     </div>
                     <div class="col-md-6">
                         <div class="card text-white bg-dark mb-3" >
-                            <div class="card-header">Control Center</div>
+                            <div class="card-header">Daily Routine - Control Center</div>
                             <div class="card-body">
                               <p class="card-text">BigBox main feature. </p>
                               <p class="card-text">Proceed to perform GES Basic Set assembly and inspection process.</p>
                               <button type="button" class="btn btn-info btn-lg dryweybaybtn" onclick="location.href='/control_panel';">Press for Control Center</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3"></div>
+                    <div class="col-md-6">
+                        <div class="card text-white bg-dark mb-3" >
+                            <div class="card-header">Maintenance</div>
+                            <div class="card-body">
+                              <p class="card-text">Unlock all service doors and all modules doors for cleaning.</p>
+                              <p class="card-text" id="lastmain">Last maintenance since: </p>
+                              <button type="button" class="btn btn-info btn-lg dryweybaybtn" onclick="location.href='/control_panel';">Press for Maintenance</button>
                             </div>
                         </div>
                     </div>
@@ -68,15 +80,16 @@
         success:function(respond){
             var month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
             var week = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
-            console.log(parseFloat(respond)*1000);
-            var MainTime = new Date(parseFloat(respond) * 1000);
-            console.log(MainTime);
+            var MainTime = new Date(parseFloat(respond['timestamp_maintenance']) * 1000);
+            var RefillTime = new Date(parseFloat(respond['timestamp_refill']) * 1000);
             // timestring = MainTime.getMonth + MainTime.getDate + MainTime.getFullYear + "(" + MainTime.getDay + ")" + MainTime.getHours + "0" + MainTime.getMinutes() + "0" + MainTime.getSeconds();
             // timestring = MainTime.getMonth() + MainTime.getDate() + MainTime.getFullYear() + "(" + MainTime.getDay() + ")" + MainTime.getHours() + "0" + MainTime.getMinutes() + "0" + MainTime.getSeconds();
             
-            timestring = MainTime.getDate() + " " + month[MainTime.getMonth()] + " " + MainTime.getFullYear() + " (" + week[MainTime.getDay()] + ") " + MainTime.getHours() + ':' + ("0" + MainTime.getMinutes()).substr(-2) + ':' + ("0" + MainTime.getSeconds()).substr(-2);
-            console.log(timestring);
-            $('#lastmain').text("Last maintenance since: " + timestring);
+            timestring_maintenance = MainTime.getDate() + " " + month[MainTime.getMonth()] + " " + MainTime.getFullYear() + " (" + week[MainTime.getDay()] + ") " + MainTime.getHours() + ':' + ("0" + MainTime.getMinutes()).substr(-2) + ':' + ("0" + MainTime.getSeconds()).substr(-2);
+            timestring_refill = RefillTime.getDate() + " " + month[RefillTime.getMonth()] + " " + RefillTime.getFullYear() + " (" + week[RefillTime.getDay()] + ") " + RefillTime.getHours() + ':' + ("0" + RefillTime.getMinutes()).substr(-2) + ':' + ("0" + RefillTime.getSeconds()).substr(-2);
+            
+            $('#lastmain').text("Last maintenance since: " + timestring_maintenance);
+            $('#lastrefill').text("Last maintenance since: " + timestring_refill);
         }
     });
     }
