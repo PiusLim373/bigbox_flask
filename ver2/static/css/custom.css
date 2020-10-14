@@ -66,9 +66,14 @@ a:hover{
     color: #4BBF73;
 
 }
+.user-text{
+    margin-top:5px;
+}
 .logout-btn{
     float:right;
     margin-right: 15px;
+    /* margin-bottom: 10px; */
+
 }
 
 .refillbtn{
@@ -84,4 +89,16 @@ a:hover{
     top:15px;
     right: 10px;
 
+}
+
+.availability-tick{
+    margin-top:3px;
+}
+
+.green{
+    color: #4bbf73;
+}
+
+.red{
+    color:#d9534f;
 }

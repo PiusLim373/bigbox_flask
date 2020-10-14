@@ -1,7 +1,7 @@
 <html lang="en">
 
 <head>
-    <title>BigBox Debug Page</title>
+    <title>BigBox Refill Panel</title>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
@@ -12,6 +12,13 @@
     <script src="static/scripts/jquery-3.5.1.slim.min.js"></script>
     <script src="static/scripts/bootstrap.min.js"></script>
     <script src="static/scripts/custom.js"></script>
+    <script>
+        $(document).ready(function(){
+            // $('#CheckingModal').modal("show");
+            UpdateRefillTick();
+       });  
+
+   </script>
 </head>
 
 <body>
@@ -21,16 +28,24 @@
     <div class="container">
         <div class="row">
             <div class=col-md-12 >
-                <h1 class="display-3">Bigbox Refill Centre</h1>
-                <div style="width: 100%;">
+                <h1>Bigbox Refill Centre</h1>
+                <!-- <div style="width: 100%;">
                     <p class="lead" style="display:inline-block;">Greetings! you are now logged in as: <font color="red">{{g.user.username}}</font> </p>
                     <button type="button" class="btn btn-primary btn-sm logout-btn" onclick="Logout()">Logout</button>
                 </div>
-                <hr class="my-4">
+                <hr class="my-4"> -->
             </div>
+            <div class="col-md-11"><p class="lead user-text" >Greetings! you are now logged in as: <font color="red">{{g.user.username}}</font> </p></div>
+            <div class="col=md-1"><button type="button" class="btn btn-primary btn-sm" onclick="Logout()">Logout</button></div>
+            <div class="col-md-12"><hr class="my-4"></div>
         </div>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-9"></div>
+            <div class="col-md-1"><center><h5>Refill</h5></center></div>
+            <div class="col-md-2"><center><h5>Availability</h5></center></div>
+        </div>
+        <div class="row">
+            <div class="col-md-10">
                 <div class="card bg-secondary">
                     <div class="card-header">Ring Spare Bay
                         <a data-toggle="collapse" data-target="#RingSpareBayCollapse"><i class="fas fa-chevron-down dropdown-arrow"  id="RingSpareBayCollapseDropdownBtn" onclick="CollapseDropdown('RingSpareBay')"></i></a>
@@ -234,10 +249,11 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-2"><center><i class="fas fa-check-circle fa-3x availability-tick" id="RingSpareBayTick"></i></center></div>
         </div>
         <br>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-10">
                 <div class="card bg-secondary">
                     <div class="card-header">Non Ring Spare Bay
                         <a data-toggle="collapse" data-target="#NonRingSpareBayCollapse"><i class="fas fa-chevron-down dropdown-arrow"  id="NonRingSpareBayCollapseDropdownBtn" onclick="CollapseDropdown('NonRingSpareBay')"></i></a>
@@ -355,25 +371,26 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-2"><center><i class="fas fa-check-circle fa-3x availability-tick" id="NonRingSpareBayTick"></i></center></div>
         </div>
         <br>
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-md-10">
                 <div class="card bg-secondary">
                     <div class="card-header">Temp Bracket
-                        <a data-toggle="collapse" data-target="#TempBracCollapse"><i class="fas fa-chevron-down dropdown-arrow"  id="TempBracDropdownBtn" onclick="CollapseDropdown('TempBrac')"></i></a>
+                        <a data-toggle="collapse" data-target="#TempBracCollapse"><i class="fas fa-chevron-down dropdown-arrow"  id="TempBracCollapseDropdownBtn" onclick="CollapseDropdown('TempBrac')"></i></a>
                     </div>
                     <div class="collapse" id="TempBracCollapse1">
                         <div class="card-body">
                             <div class="row">
                                 <div class="col-md-12">
-                                    <p class="card-text">A Temp Bracket has been loaded onto Processing Table 2, no action needed</p>
+                                    <p class="card-text">A Temp Bracket has been loaded onto Processing Table 2, no action needed.</p>
                                 </div>
                             </div>
                             <br>
                             <div class="row">
                                 <div class="col-md-3"></div>
-                                <div class="col-md-6"><button type="button" class="btn btn-primary dryweybaybtn" onclick="CollapseRefill('NonRingSpareBay')" >Close</button></div>
+                                <div class="col-md-6"><button type="button" class="btn btn-primary dryweybaybtn" onclick="CollapseRefill('TempBracClose')" >Close</button></div>
                                 
                             </div>
                         </div>
@@ -397,33 +414,283 @@
                             <br>
                             <div class="row">
                                 <div class="col-md-3"></div>
-                                <div class="col-md-6"><button type="button" class="btn btn-primary dryweybaybtn" onclick="CollapseRefill('NonRingSpareBay')" >Load-in Temp Backet</button></div>
+                                <div class="col-md-6"><button type="button" class="btn btn-primary dryweybaybtn" onclick="CollapseRefill('TempBrac')" >Load-in Temp Backet</button></div>
                                 
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+            <div class="col-md-2"><center><i class="fas fa-check-circle fa-3x availability-tick" id="TempBracketTick"></i></center></div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-10">
+                <div class="card bg-secondary">
+                    <div class="card-header">Tray Paper Bay
+                        <a data-toggle="collapse" data-target="#TrayPaperBayCollapse"><i class="fas fa-chevron-down dropdown-arrow"  id="TrayPaperBayCollapseDropdownBtn" onclick="CollapseDropdown('TrayPaperBay')"></i></a>
+                    </div>
+                    <div class="collapse" id="TrayPaperBayCollapse">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p class="card-text" id="TrayPaperBayRemaining"></p>
+                                    <p class="card-text">Load in 50cm x 30cm Crepe Paper at the Tray Paper Bay as indicated and press the "Refill Tray Paper Bay" button below to continue.</p>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <center><img class="responsive" src="https://via.placeholder.com/150"></center>
+                                </div>
+                                <div class="col-md-6">
+                                    <center><img class="responsive" src="https://via.placeholder.com/150"></center>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6"><button type="button" class="btn btn-primary dryweybaybtn" onclick="CollapseRefill('TrayPaperBay')" >Refill Tray Paper Bay</button></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2"><center><i class="fas fa-check-circle fa-3x availability-tick" id="TrayPaperBayTick"></i></center></div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-10">
+                <div class="card bg-secondary">
+                    <div class="card-header">Wrapping Bay - Crepe Paper
+                        <a data-toggle="collapse" data-target="#WrappingBayPaperCollapse"><i class="fas fa-chevron-down dropdown-arrow"  id="WrappingBayPaperCollapseDropdownBtn" onclick="CollapseDropdown('WrappingBayPaper')"></i></a>
+                    </div>
+                    <div class="collapse" id="WrappingBayPaperCollapse">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p class="card-text" id="WrappingBayPaperRemaining"></p>
+                                    <p class="card-text">Load in 30cm x 30cm Crepe Paper at the Wrapping Bay as indicated and press the "Refill Wrapping Bay - Crepe Paper" button below to continue.</p>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <center><img class="responsive" src="https://via.placeholder.com/150"></center>
+                                </div>
+                                <div class="col-md-6">
+                                    <center><img class="responsive" src="https://via.placeholder.com/150"></center>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6"><button type="button" class="btn btn-primary dryweybaybtn" onclick="CollapseRefill('WrappingBayPaper')" >Refill Wrapping Bay - Crepe Paper</button></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2"><center><i class="fas fa-check-circle fa-3x availability-tick" id="WrappingBayPaperTick"></i></center></div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-10">
+                <div class="card bg-secondary">
+                    <div class="card-header">Wrapping Bay - Tape
+                        <a data-toggle="collapse" data-target="#WrappingBayTapeCollapse"><i class="fas fa-chevron-down dropdown-arrow"  id="WrappingBayTapeCollapseDropdownBtn" onclick="CollapseDropdown('WrappingBayTape')"></i></a>
+                    </div>
+                    <div class="collapse" id="WrappingBayTapeCollapse">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p class="card-text" id="WrappingBayTapeRemaining"></p>
+                                    <p class="card-text">Load in 3M Masking Tape at the Wrapping Bay as indicated and press the "Refill Wrapping Bay - Tape" button below to continue.</p>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <center><img class="responsive" src="https://via.placeholder.com/150"></center>
+                                </div>
+                                <div class="col-md-6">
+                                    <center><img class="responsive" src="https://via.placeholder.com/150"></center>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6"><button type="button" class="btn btn-primary dryweybaybtn" onclick="CollapseRefill('WrappingBayTape')" >Refill Wrapping Bay - Tape</button></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2"><center><i class="fas fa-check-circle fa-3x availability-tick" id="WrappingBayTapeTick"></i></center></div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-10">
+                <div class="card bg-secondary">
+                    <div class="card-header">Printer Bay - Crepe Paper
+                        <a data-toggle="collapse" data-target="#PrinterBayWrapperCollapse"><i class="fas fa-chevron-down dropdown-arrow"  id="PrinterBayWrapperCollapseDropdownBtn" onclick="CollapseDropdown('PrinterBayWrapper')"></i></a>
+                    </div>
+                    <div class="collapse" id="PrinterBayWrapperCollapse">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p class="card-text" id="PrinterBayWrapperRemaining"></p>
+                                    <p class="card-text">Load in 30cm x 30cm Crepe Paper at the Printer Bay as indicated and press the "Refill Printer Bay - Crepe Paper" button below to continue.</p>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <center><img class="responsive" src="https://via.placeholder.com/150"></center>
+                                </div>
+                                <div class="col-md-6">
+                                    <center><img class="responsive" src="https://via.placeholder.com/150"></center>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6"><button type="button" class="btn btn-primary dryweybaybtn" onclick="CollapseRefill('PrinterBayWrapper')" >Refill Printer Bay - Crepe Paper</button></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2"><center><i class="fas fa-check-circle fa-3x availability-tick" id="PrinterBayWrapperTick"></i></center></div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-10">
+                <div class="card bg-secondary">
+                    <div class="card-header">Printer Bay - A4 Paper
+                        <a data-toggle="collapse" data-target="#PrinterBayA4PaperCollapse"><i class="fas fa-chevron-down dropdown-arrow"  id="PrinterBayA4PaperCollapseDropdownBtn" onclick="CollapseDropdown('PrinterBayA4Paper')"></i></a>
+                    </div>
+                    <div class="collapse" id="PrinterBayA4PaperCollapse">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p class="card-text" id="PrinterBayA4PaperRemaining"></p>
+                                    <p class="card-text">Load in A4 Paper at the Printer Bay as indicated and press the "Refill Printer Bay - A4 Paper" button below to continue.</p>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <center><img class="responsive" src="https://via.placeholder.com/150"></center>
+                                </div>
+                                <div class="col-md-6">
+                                    <center><img class="responsive" src="https://via.placeholder.com/150"></center>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6"><button type="button" class="btn btn-primary dryweybaybtn" onclick="CollapseRefill('PrinterBayA4Paper')" >Refill Printer Bay - A4 Paper</button></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2"><center><i class="fas fa-check-circle fa-3x availability-tick" id="PrinterBayA4PaperTick"></i></center></div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-10">
+                <div class="card bg-secondary">
+                    <div class="card-header">Indicator Dispenser
+                        <a data-toggle="collapse" data-target="#IndicatorDispenserCollapse"><i class="fas fa-chevron-down dropdown-arrow"  id="IndicatorDispenserCollapseDropdownBtn" onclick="CollapseDropdown('IndicatorDispenser')"></i></a>
+                    </div>
+                    <div class="collapse" id="IndicatorDispenserCollapse">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p class="card-text" id="IndicatorDispenserRemaining"></p>
+                                    <p class="card-text">Load in 3M Steam Indicator at the Indicator Dispenser as indicated and press the "Refill Indicator Dispenser" button below to continue.</p>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <center><img class="responsive" src="https://via.placeholder.com/150"></center>
+                                </div>
+                                <div class="col-md-6">
+                                    <center><img class="responsive" src="https://via.placeholder.com/150"></center>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6"><button type="button" class="btn btn-primary dryweybaybtn" onclick="CollapseRefill('IndicatorDispenser')" >Refill Indicator Dispenser</button></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2"><center><i class="fas fa-check-circle fa-3x availability-tick" id="IndicatorDispenserTick"></i></center></div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-10">
+                <div class="card bg-secondary">
+                    <div class="card-header">Sticker Tag Printer
+                        <a data-toggle="collapse" data-target="#StickerTagPrinterCollapse"><i class="fas fa-chevron-down dropdown-arrow"  id="StickerTagPrinterCollapseDropdownBtn" onclick="CollapseDropdown('StickerTagPrinter')"></i></a>
+                    </div>
+                    <div class="collapse" id="StickerTagPrinterCollapse">
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <p class="card-text" id="StickerTagPrinterRemaining"></p>
+                                    <p class="card-text">Load in Sticker Tag at the Sticker Tag Printer as indicated and press the "Refill Sticker Tag Printer" button below to continue.</p>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <center><img class="responsive" src="https://via.placeholder.com/150"></center>
+                                </div>
+                                <div class="col-md-6">
+                                    <center><img class="responsive" src="https://via.placeholder.com/150"></center>
+                                </div>
+                            </div>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6"><button type="button" class="btn btn-primary dryweybaybtn" onclick="CollapseRefill('StickerTagPrinter')" >Refill Sticker Tag Printer</button></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-2"><center><i class="fas fa-check-circle fa-3x availability-tick" id="StickerTagPrinterTick"></i></center></div>
         </div>
     </div>
+    <br>
+    <br>
 
 
-    <div class="modal fade bd-example-modal-lg"  id="CheckingBracModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade bd-example-modal-lg" data-backdrop="static" id="CheckingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog " role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="exampleModalLabel">Checking for Temp Bracket</h5>
+              <h5 class="modal-title" id="exampleModalLabel">Querying data from server</h5>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <p> System is checking for Temp Bracket, <font color="red">please wait patiently...</font></p>
+                        <p>System is querying data from server, <font color="red">please wait patiently...</font></p>
                     </div>
                 </div> 
             </div>
           </div>
         </div>
     </div>
+
+
 </body>
 
 

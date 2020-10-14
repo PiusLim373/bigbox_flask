@@ -120,6 +120,7 @@ def CheckConsumables():
         if not consumables_SMACHRun:
             success = 2
         response = {'check_success': success, 'ConsumablesDict': ConsumablesDict}
+        # sleep(2)
         return jsonify(response)
         # ConsumablesDict = {'RingSpareBay' : RingSpareBayCon, 'NonRingSpareBay' : NonRingSpareBayCon, 'TempBracket' : TempBracketCon, 'TrayPaper' : TrayPaperCon, 'WrappingPaper' : WrappingPaperCon, 'WrappingSealer' : WrappingSealerCon, 'PrintedListWrapper' : PrintedListWrapperCon, 'A4Paper' : A4PaperCon, 'IndicatorDispenser' : IndicatorDispenserCon, 'StickerTag' : StickerTagCon}
     
@@ -195,32 +196,32 @@ def RefillConsumables():
         if data['action'] == "reload":
             task = {'task':'reload'}
             return str(requests.post(ProcessingTable2Flask, json = task).content)
-        elif data['action'] == "consumables_check":
-            task = {'task':'consumables_check'}
-            sleep(5)
-            print("returning")
-            requests.post(ProcessingTable2Flask, json = task)
-            return 'True'
     elif(data['module'] == "WrappingBayPaper" or data['module'] == "WrappingBayTape"):
         if data['action'] == "reload_paper":
             task = {'task':'reload_paper'}
         elif data['action'] == "reload_tape":
             task = {'task':'reload_tape'}
-        requests.post(WrappingBayFlask, json = task)
-        return 'True'
+        elif data['action'] == "consumables_count_paper":
+            task = {'task':'consumables_count_paper'}
+        elif data['action'] == "consumables_count_tape":
+            task = {'task':'consumables_count_tape'}
+        return requests.post(WrappingBayFlask, json = task).content
     
     elif(data['module'] == "PrinterBayWrapper" or data['module'] == "PrinterBayA4Paper"):
         if data['action'] == "reload_wrapper":
             task = {'task':'reload_wrapper'}
         elif data['action'] == "reload_a4paper":
             task = {'task':'reload_a4paper'}
-        requests.post(PrinterBayFlask, json = task)
-        return 'True'
+        elif data['action'] == "consumables_count_a4paper":
+            task = {'task':'consumables_count_a4paper'}
+        elif data['action'] == "consumables_count_wrapper":
+            task = {'task':'consumables_count_wrapper'}
+        return requests.post(PrinterBayFlask, json = task).content
 
     elif(data['module'] == "TrayPaperBay" or data['module'] == "IndicatorDispenser" or data['module'] == "StickerTagPrinter"):
         task = {'task': data['action']}
-        requests.post(eval(data['module'] + "Flask"), json = task)
-        return 'True'
+        return requests.post(eval(data['module'] + "Flask"), json = task).content
+        # return 'True'
 
 @app.route('/control_panel', methods = ['GET'])
 def control_panel():

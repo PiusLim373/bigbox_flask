@@ -6,7 +6,7 @@ app = Flask(__name__)
 #this flask shouldnt be this simple, have vision and record which bracket process is done etc
 #or maybe this module can be combines with the ring inspection bay
 
-TempBracket = True #if bracket exists
+TempBracket = False #if bracket exists
 PositionerOpen = True #bracket positioner status, true=open, false = close
 
 def ClosePositioner():

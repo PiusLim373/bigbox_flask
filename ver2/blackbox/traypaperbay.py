@@ -3,7 +3,7 @@ from flask import Flask, request, jsonify
 from time import sleep
 app = Flask(__name__)
 
-TrayPaper = 200 #paper per stack of crepe loaded, to estimate number of paper left
+TrayPaper = 19 #paper per stack of crepe loaded, to estimate number of paper left
 
 @app.route('/get_status', methods = ['POST'])
 def get_status():
@@ -15,6 +15,8 @@ def get_status():
             return '0'
         else: 
             return '1'
+    elif task == "consumables_count":
+        return str(TrayPaper/2)
     elif task =="dispense_paper":
         #insert code to activate lifting mechanism to dispense 1 paper here
         TrayPaper -= 1

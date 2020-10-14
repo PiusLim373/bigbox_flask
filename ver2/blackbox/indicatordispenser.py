@@ -15,6 +15,8 @@ def get_status():
             return '0'
         else: 
             return '1'
+    elif task == "consumables_count":
+        return str(Indicator)
     elif task == "reload":
         Indicator = 30
         return 'successfully reloaded'

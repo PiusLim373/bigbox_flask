@@ -397,7 +397,7 @@ function Refill(type){
                 "action":"reload"
             }),
             success:function(respond){
-                alert("Loading successful");
+                alert("Successfully refilled");
                 $("#" + type + "Modal").modal("hide");
                 CheckConsumables()
             }
@@ -413,7 +413,7 @@ function Refill(type){
                 "action":"reload_paper"
             }),
             success:function(respond){
-                alert("Loading successful");
+                alert("Successfully refilled");
                 $("#" + type + "Modal").modal("hide");
                 CheckConsumables()
             }
@@ -429,7 +429,7 @@ function Refill(type){
                 "action":"reload_tape"
             }),
             success:function(respond){
-                alert("Loading successful");
+                alert("Successfully refilled");
                 $("#" + type + "Modal").modal("hide");
                 CheckConsumables()
             }
@@ -445,7 +445,7 @@ function Refill(type){
                 "action":"reload_wrapper"
             }),
             success:function(respond){
-                alert("Loading successful");
+                alert("Successfully refilled");
                 $("#" + type + "Modal").modal("hide");
                 CheckConsumables()
             }
@@ -461,7 +461,7 @@ function Refill(type){
                 "action":"reload_a4paper"
             }),
             success:function(respond){
-                alert("Loading successful");
+                alert("Successfully refilled");
                 $("#" + type + "Modal").modal("hide");
                 CheckConsumables()
             }
@@ -529,6 +529,35 @@ function GETSpareBay(type){
     }
 }
 
+//###################################################### for Refill Panel Page #####/
+function UpdateRefillTick(){
+    // $('#CheckingModal').modal("show");
+    $.ajax({
+        method:'POST',
+        url:"/CheckConsumables",
+        data:{
+            'from':'webui'
+        },
+        success:function(respond){
+            for (var x in respond['ConsumablesDict']){
+                if(respond['ConsumablesDict'][x] == 1){
+                    $('#'+x+'Tick').removeClass("fa-times-circle");
+                    $('#'+x+'Tick').removeClass("red");
+                    $('#'+x+'Tick').addClass("fa-check-circle");
+                    $('#'+x+'Tick').addClass("green");
+
+                }
+                else{
+                    $('#'+x+'Tick').removeClass("fa-check-circle");
+                    $('#'+x+'Tick').removeClass("green");
+                    $('#'+x+'Tick').addClass("fa-times-circle");
+                    $('#'+x+'Tick').addClass("red");
+                }
+            }
+            $('#CheckingModal').modal("hide");
+        }
+    });
+} 
 function CollapseDropdown(type){
     if (!$('#' + type +'Collapse').hasClass('show')){
         $('#' + type +'CollapseDropdownBtn').removeClass('fa-chevron-down');
@@ -541,38 +570,166 @@ function CollapseDropdown(type){
     if (type == 'RingSpareBay' || type == 'NonRingSpareBay'){
         GETSpareBay(type);
     }
-    else if(type == 'TempBrac'){
-        $('#CheckingBracModal').show();
 
+    else if (type == 'TrayPaperBay' || type == "IndicatorDispenser"|| type == "StickerTagPrinter"){
+        $.ajax({
+            method:'POST',
+            url:"/RefillConsumables",
+            contentType: 'application/json',
+            data: JSON.stringify({
+                "module": type,
+                "action":"consumables_count"
+                }),
+            success:function(respond){
+                $('#' + type + 'Remaining').html("The " + type + " is estimated to be able to run for another "+ respond+ " rounds.");
+                if($('#' + type+'Tick').hasClass("fa-check-circle")){
+                    $('#' + type + 'Remaining').removeClass("red");
+                    $('#' + type + 'Remaining').addClass("green");
+                }
+                else if($('#' + type+'Tick').hasClass("fa-times-circle")){
+                    $('#' + type + 'Remaining').removeClass("green");
+                    $('#' + type + 'Remaining').addClass("red");
+                }
+                
+            }
+        });
+    }
+    else if (type == 'WrappingBayPaper'){
+        $.ajax({
+            method:'POST',
+            url:"/RefillConsumables",
+            contentType: 'application/json',
+            data: JSON.stringify({
+                "module": type,
+                "action":"consumables_count_paper"
+                }),
+            success:function(respond){
+                $('#' + type + 'Remaining').html("The Wrapping Bay is estimated to be able to run for another "+ respond+ " rounds.");
+                if($('#' + type+'Tick').hasClass("fa-check-circle")){
+                    $('#' + type + 'Remaining').removeClass("red");
+                    $('#' + type + 'Remaining').addClass("green");
+                }
+                else if($('#' + type+'Tick').hasClass("fa-times-circle")){
+                    $('#' + type + 'Remaining').removeClass("green");
+                    $('#' + type + 'Remaining').addClass("red");
+                }
+                
+            }
+        });
+    }
+    else if (type == 'WrappingBayTape'){
+        $.ajax({
+            method:'POST',
+            url:"/RefillConsumables",
+            contentType: 'application/json',
+            data: JSON.stringify({
+                "module": type,
+                "action":"consumables_count_tape"
+                }),
+            success:function(respond){
+                $('#' + type + 'Remaining').html("The Wrapping Bay is estimated to be able to run for another "+ respond+ " rounds.");
+                if($('#' + type+'Tick').hasClass("fa-check-circle")){
+                    $('#' + type + 'Remaining').removeClass("red");
+                    $('#' + type + 'Remaining').addClass("green");
+                }
+                else if($('#' + type+'Tick').hasClass("fa-times-circle")){
+                    $('#' + type + 'Remaining').removeClass("green");
+                    $('#' + type + 'Remaining').addClass("red");
+                }
+                
+            }
+        });
+    }
+    else if (type == 'PrinterBayWrapper'){
+        $.ajax({
+            method:'POST',
+            url:"/RefillConsumables",
+            contentType: 'application/json',
+            data: JSON.stringify({
+                "module": type,
+                "action":"consumables_count_wrapper"
+                }),
+            success:function(respond){
+                $('#' + type + 'Remaining').html("The Printer Bay is estimated to be able to run for another "+ respond+ " rounds.");
+                if($('#' + type+'Tick').hasClass("fa-check-circle")){
+                    $('#' + type + 'Remaining').removeClass("red");
+                    $('#' + type + 'Remaining').addClass("green");
+                }
+                else if($('#' + type+'Tick').hasClass("fa-times-circle")){
+                    $('#' + type + 'Remaining').removeClass("green");
+                    $('#' + type + 'Remaining').addClass("red");
+                }
+                
+            }
+        });
+    }
+    else if (type == 'PrinterBayA4Paper'){
+        $.ajax({
+            method:'POST',
+            url:"/RefillConsumables",
+            contentType: 'application/json',
+            data: JSON.stringify({
+                "module": type,
+                "action":"consumables_count_a4paper"
+                }),
+            success:function(respond){
+                $('#' + type + 'Remaining').html("The Printer Bay is estimated to be able to run for another "+ respond+ " rounds.");
+                if($('#' + type+'Tick').hasClass("fa-check-circle")){
+                    $('#' + type + 'Remaining').removeClass("red");
+                    $('#' + type + 'Remaining').addClass("green");
+                }
+                else if($('#' + type+'Tick').hasClass("fa-times-circle")){
+                    $('#' + type + 'Remaining').removeClass("green");
+                    $('#' + type + 'Remaining').addClass("red");
+                }
+                
+            }
+        });
+    }
+    else if(type == 'TempBrac'){
+        if ($('#TempBracketTick').hasClass("fa-check-circle")){ //available
+            $('#TempBracCollapse1').collapse("show");
+        }
+        else if ($('#TempBracketTick').hasClass("fa-times-circle")){ //not available
+            $('#TempBracCollapse2').collapse("show");
+        }
+    }
+    
+}
+
+function CollapseRefill(type){
+    if (type == "TempBracClose"){
+        $('#TempBracCollapse1').collapse("hide");
+        $('#TempBracCollapseDropdownBtn').removeClass('fa-chevron-up');
+        $('#TempBracCollapseDropdownBtn').addClass('fa-chevron-down');
+    }
+    else if (type == "TempBrac"){
+        $("#LoadingBracModal").modal("show");
         $.ajax({
             method:'POST',
             url:"/RefillConsumables",
             contentType: 'application/json',
             data: JSON.stringify({
                 "module": "TempBrac",
-                "action":"consumables_check"
-              }),
+                "action":"reload"
+            }),
             success:function(respond){
-                console.log("returned!");
-                if (respond == 'True'){
-                    $("#CheckingBracModal").modal("hide");
-                    console.log("hidden");
-                    $('#TempBracCollapse1').collapse("show");
-                }
-                else{
-                    $("#CheckingBracModal").modal("hide");
-                    console.log("hidden");
-                    $('#TempBracCollapse2').collapse("show")
-                }
+                alert("Loading successful");
+                $("#LoadingModal").modal("hide");
+                
             }
         });
+        UpdateRefillTick();
+        $('#TempBracCollapse2').collapse("hide");
+        $('#TempBracCollapseDropdownBtn').removeClass('fa-chevron-up');
+        $('#TempBracCollapseDropdownBtn').addClass('fa-chevron-down');
+    }
+    else{
+        Refill(type);
+        $('#' + type + 'Collapse').collapse("hide");
+        $('#' + type +'CollapseDropdownBtn').removeClass('fa-chevron-up');
+        $('#' + type +'CollapseDropdownBtn').addClass('fa-chevron-down');
+        UpdateRefillTick();
     }
     
-}
-
-function CollapseRefill(type){
-    Refill(type);
-    $('#' + type + 'Collapse').collapse("hide");
-    $('#' + type +'CollapseDropdownBtn').removeClass('fa-chevron-up');
-    $('#' + type +'CollapseDropdownBtn').addClass('fa-chevron-down');
 }

@@ -21,6 +21,10 @@ def get_status():
             return '0'
         else:
             return '1'
+    elif task == "consumables_count_paper":
+        return str(WrappingPaper/2)
+    elif task == "consumables_count_tape":
+        return str(MaskingTape/2)
     elif task == "reload_paper":
         WrappingPaper = 200
         return 'successfully reloaded'
