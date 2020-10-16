@@ -4,7 +4,7 @@ from time import sleep
 app = Flask(__name__)
 
 WrappingPaper = 5 #paper per stack of crepe loaded, to estimate number of paper left
-A4Paper = 500 #a4 paper per pack
+A4Paper = 20 #a4 paper per pack
 
 @app.route('/get_status', methods = ['POST'])
 def get_status():

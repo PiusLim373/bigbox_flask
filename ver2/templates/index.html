@@ -27,12 +27,13 @@
         <div class="row">
             <!-- <div class="jumbotron vertical-center"> -->
             <div class="jumbotron">
-                <h1 class="display-3">Bigbox</h1>
-                <p class="lead">Welcome to Bigbox! You are now logged in as: <font color="red">{{g.user.username}}</font></p>
-                <button type="button" class="btn btn-primary btn-sm logout-btn" onclick="Logout()">Logout</button>
-                
-                <p class="lead">To continue, please indicate which process to proceed</p>
-                <hr class="my-4">
+                <div class="row">
+                    <div class="col-md-12"><h1 class="display-3">Bigbox</h1></div>
+                    <div class="col-md-11"><p class="lead user-text">Welcome to Bigbox! You are now logged in as: <font color="red">{{g.user.username}}</font></p></div>
+                    <div class="col=md-1"><button type="button" class="btn btn-primary btn-sm logout-btn" onclick="Logout()">Logout</button></div>
+                    <div class="col-md-12"><p class="lead user-text">To continue, please indicate which process to proceed</p></div>
+                    <div class="col-md-12"><hr class="my-4"></div>
+                </div>
                 <div class="row">
                     <div class="col-md-6">
                         <div class="card text-white bg-dark mb-3" >

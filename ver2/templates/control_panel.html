@@ -28,13 +28,12 @@
     <div class="container">
         <div class="row">
             <div class=col-md-12 >
-                <h1 class="display-3">Bigbox Control Centre</h1>
-                <div style="width: 100%;">
-                    <p class="lead" style="display:inline-block;">Greetings! you are now logged in as: <font color="red">{{g.user.username}}</font> </p>
-                    <button type="button" class="btn btn-primary btn-sm logout-btn" onclick="Logout()">Logout</button>
-                </div>
-                <hr class="my-4">
+                <h1>Bigbox Control Panel</h1>
             </div>
+            <div class="col-md-10"><p class="lead user-text" >Greetings! you are now logged in as: <font color="red">{{g.user.username}}</font> </p></div>
+            <div class="col=md-1"><button type="button" class="btn btn-primary btn-sm logout-btn" onclick="location.href='/index';">Back</button></div>
+            <div class="col=md-1"><button type="button" class="btn btn-primary btn-sm logout-btn" onclick="Logout()">Logout</button></div>
+            <div class="col-md-12"><hr class="my-4"></div>
         </div>
         <div class="row">
             <div class=col-md-3>
