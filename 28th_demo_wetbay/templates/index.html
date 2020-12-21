@@ -1,0 +1,119 @@
+<html lang="en">
+
+<head>
+    <title>WetBay Control Page</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0">
+    <link rel="stylesheet" href="static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="static/css/all.css">
+    <link rel="stylesheet" href="static/css/custom.css">
+    <script src="static/scripts/popper.min.js"></script>
+    <script src="static/scripts/jquery-3.5.1.slim.min.js"></script>
+    <script src="static/scripts/bootstrap.min.js"></script>
+    <script src="static/scripts/custom.js"></script>
+    <script>
+        $(document).ready(function(){
+           
+            setInterval(function(){ 
+                get_wetbay_status();  
+            }, 1000);
+       });  
+   </script>
+</head>
+
+<body>
+    <br>
+    <br>
+    <br>
+    <div class="container">
+        <div class="row">
+            <!-- <div class="jumbotron vertical-center"> -->
+            <div class="col-md-12">
+            <div class="jumbotron">
+                <div class="row">
+                    <div class="col-md-12"><h1 class="display-3">WetBay</h1></div>
+                    
+                    <div class="col-md-12"><hr class="my-4"></div>
+                    <div class="col-md-12">
+                        <div class="card border-info mb-3 " >
+                            <div class="card-header bg-info text-white">PigeonHole Controller</div>
+                            <div class="card-body  "> 
+                                <p class="card-text">You can control the pigeonhole by pressing the button below</p>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <button type="button" class="btn btn-outline-primary btn-lg pigbtn" id="pig1" onclick="pigholecontroller(1)">Pop out pigeonhole #1</button>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button type="button" class="btn btn-outline-primary btn-lg pigbtn" id="pig2" onclick="pigholecontroller(2)">Pop out pigeonhole #2</button>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button type="button" class="btn btn-outline-primary btn-lg pigbtn" id="pig3" onclick="pigholecontroller(3)">Pop out pigeonhole #3</button>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <button type="button" class="btn btn-outline-primary btn-lg pigbtn" id="pig4" onclick="pigholecontroller(4)">Pop out pigeonhole #4</button>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button type="button" class="btn btn-outline-primary btn-lg pigbtn" id="pig5" onclick="pigholecontroller(5)">Pop out pigeonhole #5</button>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button type="button" class="btn btn-outline-primary btn-lg pigbtn" id="pig6" onclick="pigholecontroller(6)">Pop out pigeonhole #6</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="card border-info mb-3 " >
+                            <div class="card-header bg-info text-white">PigeonHole Status</div>
+                            <div class="card-body "> 
+                                <p class="card-text">You can check the pigeonhole status below</p>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <button class="btn btn-success btn-lg pigbtn" id="pig1status" >Pigeonhole #1 <br/>Ready</button>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button class="btn btn-success btn-lg pigbtn" id="pig2status" >Pigeonhole #2 <br/>Ready</button>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button class="btn btn-success btn-lg pigbtn" id="pig3status" >Pigeonhole #3 <br/>Ready</button>
+                                    </div>
+                                </div>
+                                <br>
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <button class="btn btn-success btn-lg pigbtn" id="pig4status" >Pigeonhole #4 <br/>Ready</button>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button class="btn btn-success btn-lg pigbtn" id="pig5status" >Pigeonhole #5 <br/>Ready</button>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <button class="btn btn-success btn-lg pigbtn" id="pig6status" >Pigeonhole #6 <br/>Ready</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </div>
+            
+        </div>
+
+    </div>
+</body>
+<script type="text/javascript">
+    function GetLastMainTime(){
+        $.ajax({
+        method:'GET',
+        url:"/MaintenanceTime",
+        success:function(respond){
+            
+        }
+    });
+    }
+</script>
+</html>

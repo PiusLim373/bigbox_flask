@@ -1,0 +1,111 @@
+a:hover{
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.selected{
+    color: red;
+}
+
+.hide{
+    display: none;
+}
+
+#overallprocess p{
+    margin-top:16px;
+}
+
+.dryweybaybtn{
+    margin-bottom:10px;
+    width:100%;
+}
+
+.pigeonhole-success{
+    background-color: #4BBF73;
+    height:60px;
+    
+}
+
+.pigeonhole-error{
+    background-color: red;
+    height:20px;
+}
+
+.card-header{
+    font-size: large;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.card-header-danger{
+    background-color: #d9534f;
+    color: white;
+}
+
+.card-header-success{
+    background-color: #4bbf73;
+    color: white;
+}
+
+.red-text{
+    color:red;
+}
+
+.vertical-center{
+    top:35%;
+    position: absolute;
+    width:95%;
+}
+.pigbtn{
+    width:100%;
+    font-size: large;
+}
+.align-right{
+    position: absolute;
+    top:15px;
+    right: 5px;
+    color: #4BBF73;
+
+}
+.user-text{
+    margin-top:5px;
+}
+.logout-btn{
+    margin-left:2px;
+
+}
+
+.refillbtn{
+    background-color: white;
+    border-style: solid;
+    border-width: 1px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.dropdown-arrow{
+    position: absolute;
+    top:15px;
+    right: 10px;
+
+}
+
+.availability-tick{
+    margin-top:3px;
+}
+
+.green{
+    color: #4bbf73;
+}
+
+.red{
+    color:#d9534f;
+}
+
+body{
+    font-size: larger;
+}
+
+.blackbg{
+    background-color: black;
+}
